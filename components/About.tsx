@@ -10,7 +10,7 @@ export default function About() {
     <section className="bg-paper text-ink">
       <div className="mx-auto flex max-w-4xl flex-col gap-10 px-6 py-24">
         <div className="flex flex-col gap-4">
-          <p className="font-mono text-[11px] uppercase tracking-widest text-ink/50">
+          <p className="font-mono text-[11px] uppercase tracking-widest text-ink/60">
             About
           </p>
           <h2 className="max-w-xl text-3xl font-medium leading-snug sm:text-4xl">

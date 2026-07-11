@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { caseStudies } from "@/data/caseStudies";
 import { site } from "@/data/site";
+import { useIsMobile } from "@/lib/useIsMobile";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import CaseStudyStop from "./CaseStudyStop";
 
@@ -12,8 +13,9 @@ import CaseStudyStop from "./CaseStudyStop";
  * across a track of case-study stops. Click a stop to expand it in place.
  *
  * Falls back to a plain vertical stack when the user prefers reduced
- * motion (also reused for the mobile breakpoint in Phase 5) — same data,
- * same CaseStudyStop component, no sticky/scroll math.
+ * motion, or below the mobile breakpoint (the horizontal mechanic is
+ * desktop-first per the brief) — same data, same CaseStudyStop component,
+ * no sticky/scroll math.
  */
 export default function CareerLine() {
   const wrapperRef = useRef<HTMLElement>(null);
@@ -21,7 +23,8 @@ export default function CareerLine() {
   const [scrollDistance, setScrollDistance] = useState(0);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const prefersReducedMotion = useReducedMotion();
-  const useLine = !prefersReducedMotion;
+  const isMobile = useIsMobile();
+  const useLine = !prefersReducedMotion && !isMobile;
 
   function toggle(id: string) {
     setExpandedId((current) => (current === id ? null : id));
@@ -85,9 +88,9 @@ export default function CareerLine() {
   if (!useLine) {
     return (
       <section id="work" aria-label="Career line" className="px-6 py-24">
-        <p className="font-mono text-[11px] uppercase tracking-widest text-paper/50">
+        <h2 className="font-mono text-[11px] uppercase tracking-widest text-paper/50">
           Work — the career line
-        </p>
+        </h2>
         <div className="mt-10 flex flex-col divide-y divide-paper/10">
           {caseStudies.map((study) => (
             <CaseStudyStop
@@ -113,9 +116,9 @@ export default function CareerLine() {
       className="relative"
     >
       <div className="sticky top-0 flex h-screen flex-col overflow-hidden">
-        <div className="pointer-events-none absolute left-6 top-8 z-10 font-mono text-[11px] uppercase tracking-widest text-paper/50">
+        <h2 className="pointer-events-none absolute left-6 top-8 z-10 font-mono text-[11px] uppercase tracking-widest text-paper/50">
           Work — the career line
-        </div>
+        </h2>
         <div className="flex flex-1 items-center">
           <div
             ref={trackRef}

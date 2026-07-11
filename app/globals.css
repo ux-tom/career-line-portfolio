@@ -7,10 +7,18 @@
  *
  * --accent is the color knob called out in the design brief: tweak it to
  * reskin the whole site. The other configurable knob, how far the career
- * timeline travels per stop, lives in JS as `site.journey.stopSpacingVw`
- * (data/site.ts) — the Career Line component reads real content width via
- * ResizeObserver, so a single vw-based constant there is the source of
- * truth rather than a duplicated CSS variable here.
+ * timeline travels per stop, lives in JS as `site.journey` (data/site.ts,
+ * `stopWidthPx`/`expandedWidthPx`) — the Career Line component reads real
+ * content width via ResizeObserver, so plain px constants there are the
+ * source of truth rather than a duplicated CSS variable here.
+ *
+ * Contrast floor for the mono/muted-label pattern used across the site
+ * (checked with Lighthouse against these exact tokens): on the ink
+ * background, `text-paper/<N>` needs N ≥ 50 for WCAG AA (paper/40 measures
+ * 3.69:1, paper/50 measures 5.12:1). On the paper background (About's light
+ * section), `text-ink/<N>` needs N ≥ 60 (ink/50 measures 3.5:1, ink/60
+ * measures 4.86:1). `text-accent` passes on ink (4.76:1) but fails on paper
+ * (3.77:1) — don't use accent-colored text inside the light section.
  */
 :root {
   --ink: #111111;
@@ -31,4 +39,14 @@ body {
   background: var(--color-ink);
   color: var(--color-paper);
   font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* On-brand keyboard focus ring — the default blue outline reads poorly on
+   the ink background, so every focusable element gets a 2px accent outline
+   with a small offset instead. Only fires for keyboard/programmatic focus
+   (:focus-visible), not mouse clicks. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }

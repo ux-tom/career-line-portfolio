@@ -58,7 +58,7 @@ export default function CaseStudyStop({ study, expanded, onToggle, layout }: Pro
           {study.title}
         </span>
         <KpiChip label={study.teaser.label} value={study.teaser.value} />
-        <span className="font-mono text-[11px] text-paper/40 group-hover:text-accent">
+        <span className="font-mono text-[11px] text-paper/50 group-hover:text-accent">
           {expanded ? "− collapse" : "+ expand"}
         </span>
       </button>
@@ -72,7 +72,7 @@ export default function CaseStudyStop({ study, expanded, onToggle, layout }: Pro
           <ol className="flex flex-col gap-2">
             {study.process.map((step, i) => (
               <li key={step.title} className="flex gap-3">
-                <span className="font-mono text-[11px] text-paper/40">
+                <span className="font-mono text-[11px] text-paper/50">
                   0{i + 1}
                 </span>
                 <span className="text-sm">
@@ -92,7 +92,7 @@ export default function CaseStudyStop({ study, expanded, onToggle, layout }: Pro
           <div
             role="img"
             aria-label={study.projectShotAlt}
-            className="flex aspect-video w-full max-w-md items-center justify-center border border-dashed border-paper/25 font-mono text-[11px] uppercase tracking-wide text-paper/40"
+            className="flex aspect-video w-full max-w-md items-center justify-center border border-dashed border-paper/25 font-mono text-[11px] uppercase tracking-wide text-paper/50"
           >
             Project shot — placeholder
           </div>

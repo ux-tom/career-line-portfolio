@@ -72,13 +72,27 @@ Design standalone export.
   & Process → Testimonials → Contact → Footer), zero console messages, zero dev-overlay
   issues, `tsc`/lint/build all clean.
 
-- [ ] Phase 5: Responsive, a11y & performance
+- [x] Phase 5: Responsive, a11y & performance
 
-  Add a vertical stacked fallback for the Career Line below the mobile breakpoint (the
-  horizontal mechanic stays desktop-only), verify reduced-motion, keyboard focus, semantic
-  landmarks, and alt text, and add favicon + generated `opengraph-image`. Run a Lighthouse
-  pass via the chrome-devtools MCP. Done when mobile and desktop are both clean with no
-  console errors and good Core Web Vitals.
+  Added `lib/useIsMobile.ts` (same `useSyncExternalStore` pattern as the reduced-motion
+  hook) so `CareerLine` falls back to the vertical stack below 768px, not just under
+  reduced motion. Upgraded section eyebrows from `<p>` to `<h2>` across `CareerLine`,
+  `SkillsProcess`, and `Testimonials` for real heading-based navigation; `Footer` moved
+  outside `<main>` as its own landmark. Added a global on-brand `:focus-visible` ring
+  (accent outline, `app/globals.css`) since the default blue ring is low-contrast on ink.
+  Generated `app/icon.tsx` and `app/opengraph-image.tsx` with `next/og` (a hand-converted
+  hex value stands in for `--accent` since Satori doesn't support `oklch()`), removing the
+  stale default `favicon.ico`.
+  Code review: Passed. A Lighthouse accessibility pass (96/100) caught a real, systemic
+  issue: the `text-paper/40` and `text-ink/50` opacity levels used for mono labels/eyebrows
+  across five components measured 3.5–3.7:1 contrast, below WCAG AA's 4.5:1 floor. Computed
+  the actual luminance math for both token pairs (paper-on-ink needs ≥/50, ink-on-paper
+  needs ≥/60), fixed all five instances, and documented the floor as a comment in
+  `globals.css` next to the tokens so it isn't reintroduced. Re-run: Lighthouse
+  Accessibility/Best-Practices/SEO all 100/100, 46/46 audits passed. Verified in Chrome:
+  clean render and zero console errors at a 500px mobile width with the stacked fallback
+  active, and a visible accent focus ring on Tab. A performance trace on the dev server
+  measured LCP 224ms and CLS 0.00 (production build should be at least as good).
 
 - [ ] Phase 6: Ship
 

@@ -13,7 +13,7 @@ export default function Hero() {
 
       <a
         href="#work"
-        className="absolute bottom-10 font-mono text-[11px] uppercase tracking-widest text-paper/40 transition-colors hover:text-accent"
+        className="absolute bottom-10 font-mono text-[11px] uppercase tracking-widest text-paper/50 transition-colors hover:text-accent"
       >
         Scroll to start the line ↓
       </a>

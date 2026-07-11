@@ -3,9 +3,9 @@ import { site } from "@/data/site";
 export default function Testimonials() {
   return (
     <section className="mx-auto flex max-w-5xl flex-col gap-10 px-6 py-24">
-      <p className="font-mono text-[11px] uppercase tracking-widest text-paper/50">
+      <h2 className="font-mono text-[11px] uppercase tracking-widest text-paper/50">
         Testimonials
-      </p>
+      </h2>
 
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
         {site.testimonials.map((testimonial, i) => (
