@@ -107,3 +107,24 @@ Design standalone export.
   fabricated: the halftone avatar image, `city`, `introCallUrl`, and a real `public/cv.pdf`
   (the CV buttons currently point at a file that doesn't exist yet) — all clearly marked
   PLACEHOLDER in `data/site.ts`.
+
+- [ ] Phase 7: Real content handoff
+
+  Everything the brief calls placeholder that's still fake, owned by the user (not a code
+  task — the site works correctly with these values, they just aren't real yet):
+  - `data/site.ts`: `city` (currently "City, Country"), `introCallUrl` (currently a fake
+    cal.com link — either supply a real booking link or remove the "Book an intro call"
+    button in `components/Contact.tsx` if it's not wanted).
+  - `public/cv.pdf`: add the real file — `cvUrl: "/cv.pdf"` already points here, the
+    Download CV buttons in `About.tsx`/`Contact.tsx` will pick it up automatically.
+  - `data/site.ts` → `testimonials`: swap the 3 "Placeholder Name / Placeholder Co." quotes
+    for real ones.
+  - `data/caseStudies.ts`: the 4 case studies (Support Triage AI, Onboarding Rebuild,
+    Checkout Copilot, DesignOps Agent) are fictional placeholders with invented KPIs and a
+    "Placeholder Co." — replace with real projects, or keep the structure and rewrite the
+    content once real case studies are ready. Each project's shot is currently a bordered
+    "Project shot — placeholder" box in `CaseStudyStop.tsx`; swap in real screenshots when
+    available.
+  - Halftone avatar: the brief calls for one, but no component currently renders an image
+    anywhere on the site — this needs both the image asset AND a decision on where it goes
+    (Hero? About?) before it can be added; flag when ready and it can be wired in.
