@@ -14,17 +14,14 @@ export type Testimonial = {
 };
 
 export const site = {
-  // --- Identity (PLACEHOLDER) ---------------------------------------------
-  name: "Your Name",
+  // --- Identity ---------------------------------------------------------
+  name: "Tom Ottjes",
   role: "AI UX Designer",
-  city: "City, Country",
-  email: "hello@yourname.com",
-  socials: [
-    { label: "LinkedIn", url: "https://linkedin.com/in/yourname" },
-    { label: "GitHub", url: "https://github.com/yourname" },
-  ],
-  cvUrl: "/cv.pdf",
-  introCallUrl: "https://cal.com/yourname/intro",
+  city: "City, Country", // PLACEHOLDER
+  email: "tomottjes@gmail.com",
+  socials: [{ label: "LinkedIn", url: "https://www.linkedin.com/in/tom-ottjes/" }],
+  cvUrl: "/cv.pdf", // PLACEHOLDER — file doesn't exist yet, add it to public/
+  introCallUrl: "https://cal.com/yourname/intro", // PLACEHOLDER
 
   // --- Hero -----------------------------------------------------------------
   hero: {
