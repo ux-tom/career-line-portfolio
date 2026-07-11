@@ -14,7 +14,7 @@ const spaceMono = Space_Mono({
   weight: ["400", "700"],
 });
 
-const siteUrl = "https://your-portfolio.vercel.app";
+const siteUrl = "https://career-line-portfolio.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

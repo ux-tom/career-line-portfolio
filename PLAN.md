@@ -8,14 +8,19 @@ Design standalone export.
 
 ## Phases
 
-- [/] Phase 1: Scaffold & tooling
+- [x] Phase 1: Scaffold & tooling
 
-  Stand up the Next.js (App Router, TypeScript, Tailwind, ESLint) project at the repo root,
-  init git, create the GitHub repo, and link the Vercel project. Define design tokens
-  (`--color-ink`, `--color-paper`, `--color-accent`, `--line-length`) via Tailwind v4
-  `@theme` in `globals.css`, wire Space Grotesk + Space Mono via `next/font/google`, and set
-  base metadata/OpenGraph in `layout.tsx`. Done when a blank themed page builds locally and
-  a Vercel preview deploy succeeds.
+  Stood up the Next.js 16 (App Router, TypeScript, Tailwind v4, ESLint) project at the repo
+  root, initialized git, created the GitHub repo (github.com/ux-tom/career-line-portfolio),
+  and linked/deployed the Vercel project. Design tokens (`--ink`, `--paper`, `--accent`,
+  `--line-length`) are defined in `app/globals.css` via Tailwind v4 `@theme`, Space Grotesk +
+  Space Mono are wired via `next/font/google`, and base metadata/OpenGraph is set in
+  `layout.tsx`. Known gap: Vercel's GitHub Git-integration auto-connect failed (needs a
+  one-time authorization in the Vercel dashboard, not completable from the CLI) — flagged
+  to the user; deploys work via `vercel` CLI in the meantime, and Phase 6 will confirm the
+  Git integration is finished before calling the project shippable.
+  Code review: Passed. Fixed a stale placeholder in `metadataBase` (layout.tsx) to point at
+  the real deployed URL instead of a `your-portfolio.vercel.app` placeholder.
 
 - [ ] Phase 2: Data layer & config
 
