@@ -36,7 +36,7 @@ export const site = {
   // --- About ------------------------------------------------------------
   about: {
     heading: "Holistic by default.",
-    body: "Every project on this line was scoped, designed, shipped, and measured by the same person — not handed off between specialists who never see the KPI at the end. That's what \"systematic\" means here: one throughline from research to a number that moved.",
+    body: "Every project on this line was scoped, designed, shipped, and measured by the same person — not handed off between specialists who never see the KPI at the end. That’s what “systematic” means here: one throughline from research to a number that moved.",
     aiMeanings: [
       {
         title: "Vibe-codes working prototypes",

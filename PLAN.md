@@ -55,13 +55,22 @@ Design standalone export.
   last stop + CTA land together at 100% scroll, reduced-motion renders the clean stacked
   fallback, and the console is error-free throughout.
 
-- [ ] Phase 4: Supporting sections
+- [x] Phase 4: Supporting sections
 
-  Build Hero, About (holistic/systematic positioning + the three AI meanings + CV
-  download), Skills & Process (3 cards + Discover→Design→Deliver→Measure loop strip),
-  Testimonials (3 placeholder quotes), and Contact ("Next stop: your project." + footer
-  links). Done when the full page reads top-to-bottom on desktop with all placeholder
-  content in place.
+  Built `Hero.tsx`, `About.tsx` (deliberately inverted to a light bg/ink-text section —
+  holistic/systematic positioning + the three AI meanings + CV download), `SkillsProcess.tsx`
+  (3 cards + Discover→Design→Deliver→Measure loop strip), `Testimonials.tsx` (3 placeholder
+  quotes), `Contact.tsx` (`#contact`, "Next stop: your project." + email/intro-call/CV
+  buttons), and `Footer.tsx` (copyright + socials + email). `page.tsx` now composes all of
+  it in order; Footer sits outside `<main>` as its own landmark.
+  Code review: Passed. Fixed a real duplicate-React-key bug caught via the dev server's error
+  overlay — `Testimonials.tsx` keyed by `testimonial.name`, but all 3 placeholders share
+  "Placeholder Name", so React was warning about duplicate/unstable keys; switched to index
+  (safe for this static, non-reorderable list). Also swapped straight quotes for proper
+  curly quotes in the About body copy for typographic correctness.
+  Verified live in Chrome: full page scroll end-to-end (Hero → Career Line → About → Skills
+  & Process → Testimonials → Contact → Footer), zero console messages, zero dev-overlay
+  issues, `tsc`/lint/build all clean.
 
 - [ ] Phase 5: Responsive, a11y & performance
 
