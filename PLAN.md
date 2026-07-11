@@ -34,14 +34,26 @@ Design standalone export.
   Code review: Passed. `tsc --noEmit` and `npm run lint` both clean; no components consume
   this data yet (that's Phase 3/4), so nothing else to verify at this stage.
 
-- [ ] Phase 3: The Career Line (core mechanic)
+- [x] Phase 3: The Career Line (core mechanic)
 
-  Build the sticky, scroll-driven horizontal timeline: vertical scroll progress maps to
-  `translateX` across `--line-length`; stops show always-visible KPI teaser chips and
-  expand inline on click (summary, process steps, full KPIs, project-shot placeholder,
-  meta). Layout must absorb N stops and end with "Next stop: your project →" into Contact.
-  Done when scroll-driven travel is smooth, expand/collapse works, and
-  `prefers-reduced-motion` is respected.
+  Built `components/CareerLine.tsx` (sticky wrapper, ResizeObserver-measured scroll runway,
+  rAF-throttled scroll → `translate3d` on the track, driven via direct DOM mutation rather
+  than React state to avoid a re-render per scroll frame) and `components/CaseStudyStop.tsx`
+  (collapsed KPI-teaser chip that expands inline to summary, 3 process steps, full KPI set,
+  project-shot placeholder, and meta). `prefers-reduced-motion` (via a `useSyncExternalStore`
+  hook in `lib/useReducedMotion.ts`) swaps the whole mechanic for a plain vertical stack —
+  same data, same component, no scroll math — which will double as the Phase 5 mobile
+  fallback. Ends with a "Next stop: your project →" link into `#contact`.
+  Code review: Passed. Fixed two real issues found during review: (1) `react-hooks/set-state-in-effect`
+  lint error in the reduced-motion hook — rewritten with `useSyncExternalStore`, the correct
+  primitive for subscribing to external browser state; (2) a `maxWidth: 320` cap that silently
+  overrode `site.journey`'s configurable stop width on any normal desktop screen, defeating
+  the brief's "line length should stay easily configurable" requirement — replaced the vw+cap
+  scheme with plain px constants (`stopWidthPx`/`expandedWidthPx`) that actually govern layout.
+  Verified live in Chrome: scroll drives translateX smoothly across the full range, click
+  expand/collapse works and the wrapper's scroll runway self-corrects via ResizeObserver, the
+  last stop + CTA land together at 100% scroll, reduced-motion renders the clean stacked
+  fallback, and the console is error-free throughout.
 
 - [ ] Phase 4: Supporting sections
 

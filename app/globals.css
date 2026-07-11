@@ -5,18 +5,17 @@
  * Minimal mono: dark ink background, warm off-white, single orange accent.
  * No gradients, no decoration — borders, grids, and typography do the work.
  *
- * --accent and --line-length are the two knobs called out in the design brief:
- * tweak --accent to reskin, tweak --line-length to change how far the career
- * timeline travels per unit of scroll.
+ * --accent is the color knob called out in the design brief: tweak it to
+ * reskin the whole site. The other configurable knob, how far the career
+ * timeline travels per stop, lives in JS as `site.journey.stopSpacingVw`
+ * (data/site.ts) — the Career Line component reads real content width via
+ * ResizeObserver, so a single vw-based constant there is the source of
+ * truth rather than a duplicated CSS variable here.
  */
 :root {
   --ink: #111111;
   --paper: #faf9f6;
   --accent: oklch(0.62 0.19 35);
-
-  /* Horizontal travel distance of the Career Line per case-study stop.
-     Consumed by the scroll-driven timeline in Phase 3. */
-  --line-length: 100vw;
 }
 
 @theme inline {

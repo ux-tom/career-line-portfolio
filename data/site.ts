@@ -112,11 +112,15 @@ export const site = {
   },
 
   // --- Journey config --------------------------------------------------
-  // Consumed by components/CareerLine.tsx to compute scroll-driven
-  // horizontal travel. Mirrors the --line-length CSS token; keep both in
-  // sync if you change how far the line should travel per stop.
+  // Consumed by components/CareerLine.tsx / CaseStudyStop.tsx to size each
+  // stop on the horizontal line. Fixed px (not vw) so the value actually
+  // controls layout at desktop widths instead of being overridden by a
+  // max-width cap — tweak these two numbers to change how long the journey
+  // feels and how roomy an expanded case study is.
   journey: {
-    /** Horizontal distance (in vw) allocated to each case-study stop. */
-    stopSpacingVw: 60,
+    /** Width of a collapsed stop on the Career Line, in px. */
+    stopWidthPx: 320,
+    /** Width of a stop once expanded, in px. */
+    expandedWidthPx: 640,
   },
 } as const;
