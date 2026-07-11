@@ -22,13 +22,17 @@ Design standalone export.
   Code review: Passed. Fixed a stale placeholder in `metadataBase` (layout.tsx) to point at
   the real deployed URL instead of a `your-portfolio.vercel.app` placeholder.
 
-- [ ] Phase 2: Data layer & config
+- [x] Phase 2: Data layer & config
 
-  Create `data/caseStudies.ts` (typed `CaseStudy[]`, the 4 placeholder stops — Support
+  Created `data/caseStudies.ts` (typed `CaseStudy[]`, the 4 placeholder stops — Support
   Triage AI, Onboarding Rebuild, Checkout Copilot, DesignOps Agent) and `data/site.ts`
-  (name, city, email, socials, CV, accent, line length). Every stop carries a KPI teaser,
-  full KPI set, 3 process steps, summary, and meta. Done when the component layer has one
-  typed source of truth and adding a stop is appending one object.
+  (identity/contact placeholders, hero/about/skills copy written from the brief, 3
+  placeholder testimonials, and `journey.stopSpacingVw` for the Phase 3 scroll mechanic).
+  Every case study carries a KPI teaser, full KPI set, exactly 3 process steps (enforced by
+  a tuple type), summary, and meta. Adding a stop is appending one object to the array — no
+  layout code involved.
+  Code review: Passed. `tsc --noEmit` and `npm run lint` both clean; no components consume
+  this data yet (that's Phase 3/4), so nothing else to verify at this stage.
 
 - [ ] Phase 3: The Career Line (core mechanic)
 
