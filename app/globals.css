@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — "The Career Line"
+ * Minimal mono: dark ink background, warm off-white, single orange accent.
+ * No gradients, no decoration — borders, grids, and typography do the work.
+ *
+ * --accent and --line-length are the two knobs called out in the design brief:
+ * tweak --accent to reskin, tweak --line-length to change how far the career
+ * timeline travels per unit of scroll.
+ */
+:root {
+  --ink: #111111;
+  --paper: #faf9f6;
+  --accent: oklch(0.62 0.19 35);
+
+  /* Horizontal travel distance of the Career Line per case-study stop.
+     Consumed by the scroll-driven timeline in Phase 3. */
+  --line-length: 100vw;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-accent: var(--accent);
+
+  --font-display: var(--font-space-grotesk);
+  --font-mono: var(--font-space-mono);
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+}
