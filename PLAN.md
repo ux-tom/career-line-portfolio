@@ -94,19 +94,16 @@ Design standalone export.
   active, and a visible accent focus ring on Tab. A performance trace on the dev server
   measured LCP 224ms and CLS 0.00 (production build should be at least as good).
 
-- [/] Phase 6: Ship
+- [x] Phase 6: Ship
 
-  Push to GitHub `main` and confirm Vercel's production deploy from the connected repo
-  (preview-on-PR, promote-to-prod). Optionally attach a custom domain. Done when there is a
-  live production URL and auto-deploy on push is confirmed working.
-  Status: all Phase 1–5 work is committed and pushed to `main`
-  (github.com/ux-tom/career-line-portfolio); local `tsc`/lint/build are clean. With the
-  user's go-ahead, redeployed to production via the `vercel` CLI —
-  https://career-line-portfolio.vercel.app now serves the finished site (confirmed HTTP 200
-  + correct content). One thing is still outside what I can finish unattended: Vercel's
-  GitHub Git-integration auto-connect needs a one-time authorization in the Vercel dashboard
-  (Settings → Git, vercel.com/ux-tom/career-line-portfolio/settings/git) — until that's
-  done, new deploys need the `vercel --prod` CLI rather than happening automatically on
-  push/PR. Also flagging two content gaps the brief calls for that I did not fabricate: the
-  halftone avatar image, and a real `public/cv.pdf` (the Download CV/CV buttons currently
-  point at a file that doesn't exist yet).
+  Pushed to GitHub `main` and confirmed Vercel's production deploy. The user connected the
+  GitHub Git-integration in the Vercel dashboard (the one step that had to happen manually —
+  OAuth authorization isn't CLI-completable); the very next push (real name/email/LinkedIn)
+  triggered an automatic production deploy with no CLI involvement, confirming
+  preview-on-PR/deploy-on-push is fully live. https://career-line-portfolio.vercel.app
+  serves the finished site (verified HTTP 200 with the real identity content present).
+  No custom domain requested.
+  Code review: Passed. Remaining content gaps the brief calls for, intentionally not
+  fabricated: the halftone avatar image, `city`, `introCallUrl`, and a real `public/cv.pdf`
+  (the CV buttons currently point at a file that doesn't exist yet) — all clearly marked
+  PLACEHOLDER in `data/site.ts`.
