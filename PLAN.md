@@ -100,12 +100,13 @@ Design standalone export.
   (preview-on-PR, promote-to-prod). Optionally attach a custom domain. Done when there is a
   live production URL and auto-deploy on push is confirmed working.
   Status: all Phase 1–5 work is committed and pushed to `main`
-  (github.com/ux-tom/career-line-portfolio); local `tsc`/lint/build are clean. Two things
-  are still outside what I can finish unattended: (1) Vercel's GitHub Git-integration
-  auto-connect still needs a one-time authorization in the Vercel dashboard (Settings → Git)
-  — until that's done, deploys need the `vercel` CLI rather than happening automatically on
-  push; (2) the live production URL (career-line-portfolio.vercel.app) still reflects the
-  Phase 1 scaffold, not the finished site, and redeploying it was intentionally held back
-  pending your go-ahead. Also flagging two content gaps the brief calls for that I did not
-  fabricate: the halftone avatar image, and a real `public/cv.pdf` (the Download CV/CV
-  buttons currently point at a file that doesn't exist yet).
+  (github.com/ux-tom/career-line-portfolio); local `tsc`/lint/build are clean. With the
+  user's go-ahead, redeployed to production via the `vercel` CLI —
+  https://career-line-portfolio.vercel.app now serves the finished site (confirmed HTTP 200
+  + correct content). One thing is still outside what I can finish unattended: Vercel's
+  GitHub Git-integration auto-connect needs a one-time authorization in the Vercel dashboard
+  (Settings → Git, vercel.com/ux-tom/career-line-portfolio/settings/git) — until that's
+  done, new deploys need the `vercel --prod` CLI rather than happening automatically on
+  push/PR. Also flagging two content gaps the brief calls for that I did not fabricate: the
+  halftone avatar image, and a real `public/cv.pdf` (the Download CV/CV buttons currently
+  point at a file that doesn't exist yet).
