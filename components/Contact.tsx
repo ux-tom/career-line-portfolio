@@ -4,37 +4,45 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="mx-auto flex max-w-3xl scroll-mt-6 flex-col items-start gap-6 px-6 py-32"
+      className="flex scroll-mt-20 flex-col items-start gap-6 border-t border-paper/15 px-6 pb-16 pt-32 sm:px-10"
     >
-      <p className="font-mono text-[11px] uppercase tracking-widest text-accent">
-        Next stop
-      </p>
-      <h2 className="text-3xl font-medium leading-snug sm:text-5xl">
-        {site.contact.heading}
-      </h2>
-      <p className="max-w-md text-sm text-paper/70">{site.contact.body}</p>
+      <span className="inline-flex items-center gap-2.5 rounded-full border border-paper/25 px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-wide text-paper/70">
+        <span
+          className="h-2 w-2 rounded-full bg-accent"
+          style={{ animation: "blinkDot 2s infinite" }}
+        />
+        {site.contact.eyebrow}
+      </span>
 
-      <div className="mt-4 flex flex-wrap gap-3">
+      <h2 className="text-[clamp(44px,6vw,84px)] font-bold leading-none tracking-tight">
+        {site.contact.heading.map((line, i) => (
+          <span key={i} className="block">
+            {line}
+          </span>
+        ))}
+      </h2>
+
+      <div className="flex flex-wrap gap-3.5">
         <a
           href={`mailto:${site.email}`}
-          className="inline-flex items-center gap-2 border border-accent bg-accent px-4 py-2 font-mono text-[11px] uppercase tracking-widest text-ink transition-opacity hover:opacity-90"
+          className="rounded-full bg-paper px-[22px] py-3 font-mono text-[12px] uppercase tracking-wide text-ink transition-opacity hover:opacity-90"
         >
-          Email me
+          {site.email} →
         </a>
         <a
           href={site.introCallUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 border border-paper/25 px-4 py-2 font-mono text-[11px] uppercase tracking-widest transition-colors hover:border-paper"
+          className="rounded-full border border-paper px-[22px] py-3 font-mono text-[12px] uppercase tracking-wide transition-colors hover:bg-paper hover:text-ink"
         >
           Book an intro call
         </a>
         <a
           href={site.cvUrl}
           download
-          className="inline-flex items-center gap-2 border border-paper/25 px-4 py-2 font-mono text-[11px] uppercase tracking-widest transition-colors hover:border-paper"
+          className="rounded-full border border-paper/30 px-[22px] py-3 font-mono text-[12px] uppercase tracking-wide text-paper/70 transition-colors hover:border-paper hover:text-paper"
         >
-          Download CV
+          CV ↓
         </a>
       </div>
     </section>

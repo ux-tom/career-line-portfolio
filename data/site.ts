@@ -1,16 +1,14 @@
 /**
  * Site-wide content and config.
  *
- * Fields marked PLACEHOLDER are personal facts (name, contact details, CV,
- * testimonial quotes) that must be swapped for real content before launch.
- * Everything else (hero/about/skills copy) is written from the design brief
- * and can ship as-is, or be refined later.
+ * Identity (name/email/socials) is real. Fields marked PLACEHOLDER are personal
+ * facts (city, CV file, intro-call link, testimonial quotes) still owned by the
+ * user (Phase 7). All narrative copy mirrors the Claude Design reference verbatim.
  */
 
 export type Testimonial = {
   quote: string;
-  name: string;
-  role: string;
+  attribution: string;
 };
 
 export const site = {
@@ -25,58 +23,53 @@ export const site = {
 
   // --- Hero -----------------------------------------------------------------
   hero: {
-    headline: "One line, measured at every stop.",
+    eyebrow: "OPEN FOR PRODUCT TEAMS · 2026",
+    headline: ["One line,", "measured at", "every stop."],
     positioning:
-      "I design products end to end, then use AI to compress the distance between idea and working software — and to keep the system designing on-brand long after I hand it off.",
+      "I'm an AI UX designer. I ship fast, fit the development scope, and prove every design with the KPI it moved. This page is the line — scroll to travel it.",
+    scrollHint: "SCROLL ↓ = TRAVEL →",
+    journeyEstimate: "EST. JOURNEY: 4 STOPS + YOURS",
   },
 
   // --- About ------------------------------------------------------------
   about: {
-    heading: "Holistic by default.",
-    body: "Every project on this line was scoped, designed, shipped, and measured by the same person — not handed off between specialists who never see the KPI at the end. That’s what “systematic” means here: one throughline from research to a number that moved.",
-    aiMeanings: [
-      {
-        title: "Vibe-codes working prototypes",
-        description:
-          "Real interactions, not mockups — the thing you click is the thing that ships.",
-      },
-      {
-        title: "Compresses design cycles",
-        description:
-          "AI turns multi-week prototyping loops into days, without cutting the research.",
-      },
-      {
-        title: "Builds AI systems that keep designing",
-        description:
-          "On-brand components and copy generate correctly after handoff, not just at launch.",
-      },
+    heading: ["Holistic by habit,", "systematic by choice."],
+    body: [
+      "I design user-centric products end to end — from the first journey map to the shipped, measured feature. I work inside development scope, not around it: quick, solid delivery that engineering can actually build, validated against KPIs we agree on before a single pixel moves.",
+      "The “AI” in my title is practical, not decorative: I vibe-code working prototypes, compress design cycles with AI tooling, and build AI systems that keep designing for the business after I hand off.",
     ],
+    // Rendered mono in the sidebar; BASED uses `city` above.
+    meta: ["EXPERIENCE: 5+ YEARS", "FOCUS: AI × PRODUCT UX"],
   },
 
   // --- Skills & Process ---------------------------------------------------
   skills: {
+    heading: 'What "AI UX" means here',
     cards: [
       {
-        title: "Vibe code",
+        index: "01 · VIBE CODE",
+        title: "Working prototypes, not pictures",
         description:
-          "Prototypes are working software from day one — real state, real interactions, testable with real users.",
+          "I build clickable, coded prototypes with AI — real interactions, real data shapes — so stakeholders test the thing, not a promise of the thing.",
       },
       {
-        title: "AI-speed delivery",
+        index: "02 · AI-SPEED DELIVERY",
+        title: "Days where others take weeks",
         description:
-          "Design cycles that used to take weeks compress to days, without skipping discovery or validation.",
+          "AI tooling compresses exploration and iteration. What stays human: scoping with engineering, judgment calls, and hitting the agreed KPI.",
       },
       {
-        title: "AI design systems",
+        index: "03 · AI DESIGN SYSTEMS",
+        title: "Systems that design for you",
         description:
-          "Agents trained on the design system keep shipping on-brand work long after the designer moves on.",
+          "I set up AI systems that generate on-brand design for the business — so quality scales past the hours in my calendar.",
       },
     ],
     loop: [
-      { step: "Discover", description: "Find the highest-leverage problem, not the loudest one." },
-      { step: "Design", description: "Prototype in working code, not static frames." },
-      { step: "Deliver", description: "Ship in stages, scoped to what dev can absorb." },
-      { step: "Measure", description: "Track the KPI that defines success before calling it done." },
+      { step: "Discover", description: "Journey maps, analytics, interviews. KPI agreed up front." },
+      { step: "Design", description: "AI-prototyped directions in days, tested with users." },
+      { step: "Deliver", description: "Scoped with engineering; handoff matches the build." },
+      { step: "Measure", description: "The KPI decides if it worked. Numbers go on the line." },
     ],
   },
 
@@ -84,39 +77,36 @@ export const site = {
   testimonials: [
     {
       quote:
-        "Placeholder quote — the fastest design partner I've worked with, and the only one who came back with the KPI dashboard unprompted.",
-      name: "Placeholder Name",
-      role: "VP Product, Placeholder Co.",
+        "Placeholder quote — two or three sentences from a PM or engineering lead about speed, scope-fit and measurable results.",
+      attribution: "NAME · PRODUCT LEAD, COMPANY",
     },
     {
       quote:
-        "Placeholder quote — prototypes that felt finished on day two. Engineering barely had to reinterpret anything.",
-      name: "Placeholder Name",
-      role: "Engineering Lead, Placeholder Co.",
+        "Placeholder quote — a founder or stakeholder on the AI design system that kept producing after handoff.",
+      attribution: "NAME · FOUNDER, COMPANY",
     },
     {
       quote:
-        "Placeholder quote — the design system agent they built still ships on-brand work a year later.",
-      name: "Placeholder Name",
-      role: "Head of Design, Placeholder Co.",
+        "Placeholder quote — an engineer on handoff quality: what was designed is what got built, in one sprint.",
+      attribution: "NAME · STAFF ENGINEER, COMPANY",
     },
   ] satisfies Testimonial[],
 
   // --- Contact -------------------------------------------------------------
   contact: {
-    heading: "Next stop: your project.",
-    body: "Have a problem worth putting on the line? Let's talk.",
+    eyebrow: "FINAL STOP · REACH OUT",
+    heading: ["Next stop:", "your project."],
+    footerTagline: "THE LINE KEEPS GROWING",
   },
 
   // --- Journey config --------------------------------------------------
-  // Consumed by components/CareerLine.tsx / CaseStudyStop.tsx to size each
-  // stop on the horizontal line. Fixed px (not vw) so the value actually
-  // controls layout at desktop widths instead of being overridden by a
-  // max-width cap — tweak these two numbers to change how long the journey
-  // feels and how roomy an expanded case study is.
+  // Consumed by components/CareerLine.tsx / CaseStudyStop.tsx to size each stop
+  // on the horizontal line. Fixed px so the value actually controls layout at
+  // desktop widths — tweak these two numbers to change how long the journey
+  // feels and how roomy an expanded case study is. Matches the reference.
   journey: {
     /** Width of a collapsed stop on the Career Line, in px. */
-    stopWidthPx: 320,
+    stopWidthPx: 300,
     /** Width of a stop once expanded, in px. */
     expandedWidthPx: 640,
   },

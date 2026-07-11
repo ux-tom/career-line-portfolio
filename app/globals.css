@@ -24,21 +24,44 @@
   --ink: #111111;
   --paper: #faf9f6;
   --accent: oklch(0.62 0.19 35);
+  /* A hair above ink — raised card/panel surfaces on the dark sections. Kept as
+     a token so components never hardcode the near-black card fill. Held at
+     #161614 (not lighter): small accent text sits on this surface (case-study
+     step numbers, the Measure cell), and accent-on-#161614 measures 4.57:1 —
+     above the WCAG AA 4.5:1 floor. A lighter surface (e.g. #1a1a18) drops it
+     to 4.39:1 and fails. */
+  --surface: #161614;
 }
 
 @theme inline {
   --color-ink: var(--ink);
   --color-paper: var(--paper);
   --color-accent: var(--accent);
+  --color-surface: var(--surface);
 
   --font-display: var(--font-space-grotesk);
   --font-mono: var(--font-space-mono);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--color-ink);
   color: var(--color-paper);
   font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Pulsing "open for work / final stop" status dot. */
+@keyframes blinkDot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
 }
 
 /* On-brand keyboard focus ring — the default blue outline reads poorly on

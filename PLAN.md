@@ -128,3 +128,43 @@ Design standalone export.
   - Halftone avatar: the brief calls for one, but no component currently renders an image
     anywhere on the site — this needs both the image asset AND a decision on where it goes
     (Hero? About?) before it can be added; flag when ready and it can be wired in.
+
+- [x] Phase 8: Reference-parity restyle
+
+  The live site drifted from the original Claude Design export
+  (`ClaudeDesign/Portfolio Site (standalone).html`, the decoded visual source of truth) in
+  structure, layout, and copy. This phase restyles every section to render almost
+  identically to that reference, using the reference's copy verbatim, while keeping the
+  real identity data (name/email/LinkedIn) and the project's engineering upgrades (mobile
+  vertical-stack + reduced-motion fallbacks, a11y focus ring, design-token discipline —
+  reference greys reproduced via `paper`-opacity tokens, not hardcoded hex). Adds the
+  fixed top nav (avatar + name + role + section links + CV pill) that was missing, wires
+  the embedded halftone avatar (`public/halftone-avatar.png`) into the nav + About, and
+  reshapes `data/caseStudies.ts` (sentence teaser + string KPIs/steps/meta) and
+  `data/site.ts` to carry the reference copy. Intentional on-brand deviations from the
+  reference: Space Mono for labels (per PROJECT.md, vs the reference's system mono), and
+  Dribbble dropped from the footer. `city`/`cvUrl`/`introCallUrl`/testimonials/case-study
+  content stay Phase-7 placeholders — this phase changes how the site *looks and reads*,
+  not whether that data is real.
+  Code review: Passed. Fixed three real issues found during verification: (1) the
+  horizontal Career Line's dashed guideline sat below the stop-marker dots (`items-center`
+  on the track) instead of running through them — switched to `items-end` so dots land on
+  the line, matching the reference; (2) clicking a nav link (e.g. `#skills`) scrolled the
+  section title under the new fixed nav — added `scroll-mt-20` to every anchor-target
+  section (a plain `section[id] { scroll-margin-top }` rule silently didn't compile under
+  Tailwind v4's CSS layers, so the utility class was used instead, consistent with how
+  Contact already handled this in earlier phases); (3) a Lighthouse regression — the new
+  `--surface` token (`#1a1a18`, raised card backgrounds) dropped accent-on-surface text
+  (case-study step numbers, the Measure process cell) to 4.39:1 contrast, below WCAG AA;
+  computed the actual luminance math and darkened the token to `#161614` (4.57:1, passes,
+  and matches the reference's own card-bg hex), documenting the floor in `globals.css` so
+  it isn't relightened later. Also stacked the case-study detail panel and project-shot box
+  to single-column below `md` (was a fixed-width two-column flex row that crowded a 500px
+  viewport). Verified via chrome-devtools MCP against the decoded reference at 1440×900:
+  nav, hero, career-line (collapsed + expanded + scroll→translateX), about with the
+  halftone avatar, skills cards + process strip, testimonials, and contact/footer are all
+  near-identical section for section; the `copilot` stop opens by default as in the
+  reference. Confirmed zero console errors/warnings, zero horizontal overflow and a working
+  stacked fallback at 500px, and a clean `lint`/`tsc --noEmit`/`build`. Re-ran Lighthouse
+  after the surface-token fix: Accessibility/Best Practices/SEO all 100/100, 47/47 audits
+  passed.

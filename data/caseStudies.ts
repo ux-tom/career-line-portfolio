@@ -1,7 +1,8 @@
 /**
  * Case studies for the Career Line.
  *
- * ALL CONTENT BELOW IS PLACEHOLDER — real case studies land here later.
+ * ALL CONTENT BELOW IS PLACEHOLDER — real case studies land here later (Phase 7).
+ * The copy mirrors the Claude Design reference verbatim; only the structure is typed.
  *
  * The Career Line component (`components/CareerLine.tsx`) maps over this array
  * and lays itself out for however many stops exist here. To add a new project:
@@ -9,187 +10,100 @@
  * needs to change.
  */
 
-export type Kpi = {
-  /** Short mono label, e.g. "CSAT" or "Conversion". Keep to 1-2 words. */
-  label: string;
-  /** The metric itself, e.g. "3.9 → 4.6" or "+18%". */
-  value: string;
-};
-
-export type ProcessStep = {
-  title: string;
-  description: string;
-};
-
 export type CaseStudy = {
-  /** URL-safe, stable identifier — used as the React key and for deep-linking later. */
+  /** URL-safe, stable identifier — used as the React key, the anchor, and for deep-linking. */
   id: string;
-  year: number;
-  title: string;
+  /** Displayed year label, e.g. "2022". */
+  year: string;
+  /** Mono role label shown above the card, e.g. "PRODUCT DESIGNER". */
   role: string;
-  /** The single always-visible KPI chip shown on the collapsed stop. */
-  teaser: Kpi;
-  /** Full KPI set revealed when the stop is expanded (includes the teaser). */
-  kpis: Kpi[];
+  title: string;
+  /** One-sentence teaser shown on the collapsed card. */
+  teaser: string;
+  /** The single always-visible KPI chip on the collapsed stop, e.g. "CSAT 3.9 → 4.6". */
+  kpiTeaser: string;
   summary: string;
-  /** Always exactly 3 steps, per the design brief. */
-  process: [ProcessStep, ProcessStep, ProcessStep];
+  /** Always exactly 3 steps, per the design brief — each a full "Discover — …" line. */
+  steps: [string, string, string];
+  /** Full KPI set revealed when the stop is expanded, e.g. ["CSAT 3.9 → 4.6", "−41% MISROUTES"]. */
+  kpis: string[];
   /** Alt text for the (placeholder) project shot shown inside the expanded stop. */
   projectShotAlt: string;
-  meta: {
-    company: string;
-    duration: string;
-    tools: string[];
-  };
+  /** Meta lines rendered mono, joined with " · " at render. */
+  meta: string[];
 };
 
 export const caseStudies: CaseStudy[] = [
   {
-    id: "support-triage-ai",
-    year: 2022,
+    id: "triage",
+    year: "2022",
+    role: "PRODUCT DESIGNER",
     title: "Support Triage AI",
-    role: "Lead Product Designer",
-    teaser: { label: "CSAT", value: "3.9 → 4.6" },
-    kpis: [
-      { label: "CSAT", value: "3.9 → 4.6" },
-      { label: "Handle time", value: "−22%" },
-      { label: "Auto-triaged", value: "61%" },
-    ],
+    teaser: "Routing assistant for a 40-agent support team.",
+    kpiTeaser: "CSAT 3.9 → 4.6",
     summary:
-      "Redesigned the support team's triage queue around an AI classifier that routes and prioritizes incoming tickets, cutting manual sorting to near zero for common cases.",
-    process: [
-      {
-        title: "Discover",
-        description:
-          "Shadowed the support team to map where triage time actually went — 60% of it was spent re-reading tickets already answered elsewhere.",
-      },
-      {
-        title: "Design",
-        description:
-          "Prototyped an AI-assisted queue with confidence-scored routing, tested against real ticket backlogs with the team.",
-      },
-      {
-        title: "Deliver & measure",
-        description:
-          "Shipped in stages behind a flag, tracked CSAT and handle time weekly, and tuned the classifier's confidence threshold against results.",
-      },
+      "Shadowed the support floor for a week, mapped the triage journey, then co-designed an AI routing assistant with the agents themselves. Phased rollout meant zero downtime and zero retraining shock.",
+    steps: [
+      "Discover — shadowed 40 agents, mapped every handoff and dead end.",
+      "Design — co-designed routing UI with agents; AI-prototyped 2 directions.",
+      "Deliver + measure — phased rollout; CSAT tracked weekly for a quarter.",
     ],
-    projectShotAlt: "Support Triage AI — queue interface placeholder",
-    meta: {
-      company: "Placeholder Co.",
-      duration: "4 months",
-      tools: ["Figma", "LLM classifier prototype", "Amplitude"],
-    },
+    kpis: ["CSAT 3.9 → 4.6", "−41% MISROUTES", "ROLLOUT: 0 DOWNTIME"],
+    projectShotAlt: "Support Triage AI — routing assistant placeholder",
+    meta: ["B2B SUPPORT PLATFORM", "2022 · 8 WEEKS", "ROLE: SOLE DESIGNER"],
   },
   {
-    id: "onboarding-rebuild",
-    year: 2023,
+    id: "onboarding",
+    year: "2023",
+    role: "SENIOR UX",
     title: "Onboarding Rebuild",
-    role: "Senior Product Designer",
-    teaser: { label: "Drop-off", value: "−32%" },
-    kpis: [
-      { label: "Drop-off", value: "−32%" },
-      { label: "Prototype speed", value: "5 days" },
-      { label: "Time to value", value: "−40%" },
-    ],
+    teaser: "Prototyped with AI in 5 days, shipped in a sprint.",
+    kpiTeaser: "−32% DROP-OFF",
     summary:
-      "Rebuilt a five-step onboarding flow that was losing a third of new users before activation, using AI-assisted prototyping to compress the usual multi-week design cycle.",
-    process: [
-      {
-        title: "Discover",
-        description:
-          "Traced the funnel step-by-step and found the single highest-leverage drop point: a permissions screen with no explanation of why it mattered.",
-      },
-      {
-        title: "Design",
-        description:
-          "Vibe-coded three working prototypes in 5 days instead of the usual sprint, tested each against the same cohort.",
-      },
-      {
-        title: "Deliver & measure",
-        description:
-          "Rolled out the winning flow gradually, watching drop-off and time-to-first-value dashboards for regressions.",
-      },
+      "Drop-off analytics pointed at step 3 of onboarding; journey mapping showed why. I vibe-coded a working prototype in week one, tested it with 8 users, and handed engineering a build that matched 1:1.",
+    steps: [
+      "Discover — funnel analytics + journey map located the leak.",
+      "Design — vibe-coded a working prototype in 5 days; 8 user tests.",
+      "Deliver + measure — shipped in one sprint; drop-off tracked for 6 weeks.",
     ],
+    kpis: ["−32% DROP-OFF", "PROTOTYPE: 5 DAYS", "HANDOFF MATCHED 1:1"],
     projectShotAlt: "Onboarding Rebuild — activation flow placeholder",
-    meta: {
-      company: "Placeholder Co.",
-      duration: "3 weeks",
-      tools: ["Figma", "Vibe-coded prototypes", "Mixpanel"],
-    },
+    meta: ["CONSUMER FINTECH APP", "2023 · 6 WEEKS", "ROLE: SENIOR UX"],
   },
   {
-    id: "checkout-copilot",
-    year: 2024,
+    id: "copilot",
+    year: "2024",
+    role: "AI UX LEAD",
     title: "Checkout Copilot",
-    role: "Product Designer",
-    teaser: { label: "Conversion", value: "+18%" },
-    kpis: [
-      { label: "Conversion", value: "+18%" },
-      { label: "Cart abandonment", value: "−12%" },
-      { label: "AOV", value: "+6%" },
-    ],
+    teaser: "AI shopping assistant embedded in checkout.",
+    kpiTeaser: "+18% CONVERSION",
     summary:
-      "Added a lightweight AI copilot to checkout that answers shipping and returns questions inline, removing the single biggest reason for cart abandonment.",
-    process: [
-      {
-        title: "Discover",
-        description:
-          "Mined support tickets and session replays to find that shipping-cost uncertainty, not price, was the top abandonment trigger.",
-      },
-      {
-        title: "Design",
-        description:
-          "Designed a copilot UI that surfaces answers inline at the moment of hesitation rather than routing users away to a help center.",
-      },
-      {
-        title: "Deliver & measure",
-        description:
-          "A/B tested against the existing checkout, tracked conversion, abandonment, and AOV through two pricing seasons.",
-      },
+      "An AI assistant living inside checkout, answering sizing and shipping questions at the exact moment of doubt. Scoped with engineering in week one, AI-prototyped in week two, then A/B tested against baseline for six weeks.",
+    steps: [
+      "Discover — funnel audit + 12 user interviews found the doubt moments.",
+      "Design — 3 AI-prototyped directions in 4 days; tested, one won clearly.",
+      "Deliver + measure — shipped in scope; 6-week A/B against baseline.",
     ],
+    kpis: ["+18% CONVERSION", "−2.1s TO DECISION", "SHIPPED: 1 SPRINT"],
     projectShotAlt: "Checkout Copilot — inline assistant placeholder",
-    meta: {
-      company: "Placeholder Co.",
-      duration: "6 weeks",
-      tools: ["Figma", "AI SDK prototype", "A/B testing platform"],
-    },
+    meta: ["RETAIL PLATFORM · 12M MAU", "2024 · 10 WEEKS", "ROLE: AI UX LEAD"],
   },
   {
-    id: "designops-agent",
-    year: 2025,
+    id: "designops",
+    year: "2025",
+    role: "AI SYSTEMS",
     title: "DesignOps Agent",
-    role: "Design Systems Lead",
-    teaser: { label: "Ship speed", value: "6×" },
-    kpis: [
-      { label: "Ship speed", value: "6×" },
-      { label: "QA time", value: "−70%" },
-      { label: "Brand consistency", value: "98%" },
-    ],
+    teaser: "An AI system that designs on-brand for the business.",
+    kpiTeaser: "6× FASTER TO SHIP",
     summary:
-      "Built an AI agent, trained on the design system and brand guidelines, that keeps generating on-brand components and copy after handoff — without a designer in every loop.",
-    process: [
-      {
-        title: "Discover",
-        description:
-          "Audited a year of shipped features to find where the design system quietly drifted off-brand once designers moved on to the next project.",
-      },
-      {
-        title: "Design",
-        description:
-          "Designed the agent's guardrails: what it's allowed to generate, what always routes back to a human review.",
-      },
-      {
-        title: "Deliver & measure",
-        description:
-          "Rolled the agent out to two product teams, tracking ship speed, QA time, and an automated brand-consistency score.",
-      },
+      "After auditing 200+ marketing assets, I built an AI agent that generates on-brand layouts from a brief — with the brand system encoded as rules, not vibes. It runs in production daily; the team reviews instead of redraws.",
+    steps: [
+      "Discover — audited 200+ assets; extracted the real (undocumented) brand rules.",
+      "Design — encoded the system; built + tuned the generation agent.",
+      "Deliver + measure — production daily; ship-speed and brand-consistency tracked.",
     ],
+    kpis: ["6× FASTER TO SHIP", "200+ ASSETS AUDITED", "RUNS DAILY IN PROD"],
     projectShotAlt: "DesignOps Agent — component generation placeholder",
-    meta: {
-      company: "Placeholder Co.",
-      duration: "Ongoing since Q1 2025",
-      tools: ["Design tokens", "Claude-based agent", "Storybook"],
-    },
+    meta: ["D2C BRAND · IN-HOUSE", "2025 · ONGOING", "ROLE: AI SYSTEMS DESIGN"],
   },
 ];

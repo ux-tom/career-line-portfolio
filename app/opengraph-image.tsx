@@ -41,7 +41,7 @@ export default function OpengraphImage() {
             maxWidth: 900,
           }}
         >
-          {site.hero.headline}
+          {site.hero.headline.join(" ")}
         </div>
       </div>
     ),

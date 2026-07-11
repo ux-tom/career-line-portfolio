@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { caseStudies } from "@/data/caseStudies";
-import { site } from "@/data/site";
 import { useIsMobile } from "@/lib/useIsMobile";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import CaseStudyStop from "./CaseStudyStop";
@@ -17,11 +16,17 @@ import CaseStudyStop from "./CaseStudyStop";
  * desktop-first per the brief) — same data, same CaseStudyStop component,
  * no sticky/scroll math.
  */
+
+/** Dashed horizontal "line" the stops sit on (reference parity). */
+const dashedLine =
+  "repeating-linear-gradient(90deg, var(--paper) 0 6px, transparent 6px 14px)";
+
 export default function CareerLine() {
   const wrapperRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [scrollDistance, setScrollDistance] = useState(0);
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  // Default-open the "copilot" stop, matching the reference's initial state.
+  const [expandedId, setExpandedId] = useState<string | null>("copilot");
   const prefersReducedMotion = useReducedMotion();
   const isMobile = useIsMobile();
   const useLine = !prefersReducedMotion && !isMobile;
@@ -85,13 +90,27 @@ export default function CareerLine() {
     };
   }, [useLine, scrollDistance]);
 
+  const header = (
+    <div className="flex items-baseline justify-between gap-4 px-6 sm:px-10">
+      <h2 className="text-[28px] font-bold tracking-tight sm:text-[34px]">
+        The career line
+      </h2>
+      <span className="hidden font-mono text-[11px] uppercase tracking-wide text-paper/50 sm:block">
+        Click a stop to open it · New work appends →
+      </span>
+    </div>
+  );
+
+  // --- Vertical stack (mobile / reduced motion) -------------------------
   if (!useLine) {
     return (
-      <section id="work" aria-label="Career line" className="px-6 py-24">
-        <h2 className="font-mono text-[11px] uppercase tracking-widest text-paper/50">
-          Work — the career line
-        </h2>
-        <div className="mt-10 flex flex-col divide-y divide-paper/10">
+      <section
+        id="work"
+        aria-label="Career line"
+        className="border-t border-paper/15 py-20"
+      >
+        {header}
+        <div className="mt-6 flex flex-col divide-y divide-paper/10 px-6 sm:px-10">
           {caseStudies.map((study) => (
             <CaseStudyStop
               key={study.id}
@@ -101,12 +120,13 @@ export default function CareerLine() {
               layout="stack"
             />
           ))}
+          <NextStopLink />
         </div>
-        <NextStopLink layout="stack" />
       </section>
     );
   }
 
+  // --- Horizontal Career Line -------------------------------------------
   return (
     <section
       id="work"
@@ -115,14 +135,18 @@ export default function CareerLine() {
       style={{ height: `calc(100vh + ${scrollDistance}px)` }}
       className="relative"
     >
-      <div className="sticky top-0 flex h-screen flex-col overflow-hidden">
-        <h2 className="pointer-events-none absolute left-6 top-8 z-10 font-mono text-[11px] uppercase tracking-widest text-paper/50">
-          Work — the career line
-        </h2>
-        <div className="flex flex-1 items-center">
+      <div className="sticky top-0 flex h-screen flex-col overflow-hidden border-t border-paper/15">
+        <div className="pt-20">{header}</div>
+
+        <div className="relative flex flex-1 items-end">
+          <div
+            aria-hidden
+            className="absolute inset-x-0 bottom-24 h-0.5 opacity-70"
+            style={{ backgroundImage: dashedLine }}
+          />
           <div
             ref={trackRef}
-            className="flex items-center gap-16 pl-[8vw] pr-[20vw] will-change-transform"
+            className="flex items-end gap-7 px-10 pr-[15vw] will-change-transform"
           >
             {caseStudies.map((study) => (
               <CaseStudyStop
@@ -133,29 +157,47 @@ export default function CareerLine() {
                 layout="line"
               />
             ))}
-            <NextStopLink layout="line" />
+            <NextStopNode />
           </div>
+        </div>
+
+        <div className="flex items-center justify-between gap-4 px-6 pb-6 pt-3.5 font-mono text-[11px] uppercase tracking-wide text-paper/50 sm:px-10">
+          <span>Keep scrolling to travel the line</span>
+          <span>4 stops · 2022 — 2026</span>
         </div>
       </div>
     </section>
   );
 }
 
-function NextStopLink({ layout }: { layout: "line" | "stack" }) {
+/** End-of-track "your project" node with the dashed + circle (line mode). */
+function NextStopNode() {
   return (
-    <a
-      href="#contact"
-      className={
-        layout === "line"
-          ? "flex shrink-0 flex-col items-start gap-2 border-l border-accent/40 pl-6"
-          : "mt-10 flex flex-col items-start gap-2 border-t border-accent/40 pt-6"
-      }
-      style={layout === "line" ? { width: site.journey.stopWidthPx } : undefined}
-    >
-      <span className="font-mono text-[11px] tracking-wide text-paper/50">
+    <div className="flex flex-none flex-col items-center gap-3 pb-[130px]" style={{ width: 150 }}>
+      <div className="text-center font-mono text-[11px] uppercase leading-relaxed tracking-wide text-paper/50">
+        Next stop:
+        <br />
+        Your project
+      </div>
+      <a
+        href="#contact"
+        aria-label="Next stop: your project — go to contact"
+        className="flex h-14 w-14 items-center justify-center rounded-full border-[1.5px] border-dashed border-paper/50 text-2xl transition-colors hover:border-paper"
+      >
+        +
+      </a>
+    </div>
+  );
+}
+
+/** End-of-list CTA for the stacked fallback. */
+function NextStopLink() {
+  return (
+    <a href="#contact" className="flex flex-col items-start gap-2 border-t border-accent/40 py-6">
+      <span className="font-mono text-[11px] uppercase tracking-wide text-paper/50">
         Next stop
       </span>
-      <span className="text-lg font-medium text-accent">Your project →</span>
+      <span className="text-lg font-bold text-accent">Your project →</span>
     </a>
   );
 }
