@@ -2,7 +2,7 @@
 
 /*
  * Design tokens — "The Career Line"
- * Minimal mono: dark ink background, warm off-white, single orange accent.
+ * Minimal mono: dark ink background, warm off-white, single purple accent.
  * No gradients, no decoration — borders, grids, and typography do the work.
  *
  * --accent is the color knob called out in the design brief: tweak it to
@@ -17,19 +17,19 @@
  * background, `text-paper/<N>` needs N ≥ 50 for WCAG AA (paper/40 measures
  * 3.69:1, paper/50 measures 5.12:1). On the paper background (About's light
  * section), `text-ink/<N>` needs N ≥ 60 (ink/50 measures 3.5:1, ink/60
- * measures 4.86:1). `text-accent` passes on ink (4.76:1) but fails on paper
- * (3.77:1) — don't use accent-colored text inside the light section.
+ * measures 4.86:1). `text-accent` passes on ink (4.85:1) but fails on paper
+ * (3.69:1) — don't use accent-colored text inside the light section.
  */
 :root {
   --ink: #111111;
   --paper: #faf9f6;
-  --accent: oklch(0.62 0.19 35);
+  --accent: oklch(0.62 0.17 297.5);
   /* A hair above ink — raised card/panel surfaces on the dark sections. Kept as
      a token so components never hardcode the near-black card fill. Held at
      #161614 (not lighter): small accent text sits on this surface (case-study
-     step numbers, the Measure cell), and accent-on-#161614 measures 4.57:1 —
+     step numbers, the Measure cell), and accent-on-#161614 measures 4.66:1 —
      above the WCAG AA 4.5:1 floor. A lighter surface (e.g. #1a1a18) drops it
-     to 4.39:1 and fails. */
+     to 4.48:1 and fails. */
   --surface: #161614;
 }
 

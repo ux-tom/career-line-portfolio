@@ -4,8 +4,8 @@ import { site } from "@/data/site";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// See app/icon.tsx — hex conversion of the oklch(0.62 0.19 35) --accent token.
-const ACCENT_HEX = "#e14d28";
+// See app/icon.tsx — hex conversion of the oklch(0.62 0.17 297.5) --accent token.
+const ACCENT_HEX = "#936bde";
 
 export default function OpengraphImage() {
   return new ImageResponse(

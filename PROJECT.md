@@ -61,6 +61,6 @@ stack (the horizontal-scroll mechanic is desktop-first).
 - **Anti-pattern:** Never a generic scroll-jacked portfolio template with stock gradients,
   card-shadow decoration, or vague "passionate designer" copy. No gradients, no decoration —
   borders, grids, and typography carry the design.
-- **Tone:** Minimal mono, dark ink (`#111`) and warm off-white (`#faf9f6`), single orange
-  accent (`oklch(0.62 0.19 35)`, tweakable). The brand promise: work that is fast, systematic,
+- **Tone:** Minimal mono, dark ink (`#111`) and warm off-white (`#faf9f6`), single purple
+  accent (`oklch(0.62 0.17 297.5)`, tweakable). The brand promise: work that is fast, systematic,
   and provably effective — one line, measured at every stop.

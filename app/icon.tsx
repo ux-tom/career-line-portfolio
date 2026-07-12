@@ -5,9 +5,9 @@ export const contentType = "image/png";
 
 // Satori (the renderer behind ImageResponse) doesn't support the oklch()
 // function used for --accent in globals.css, so this is a hex conversion
-// of the same oklch(0.62 0.19 35) value — keep them in sync if the accent
+// of the same oklch(0.62 0.17 297.5) value — keep them in sync if the accent
 // token changes.
-const ACCENT_HEX = "#e14d28";
+const ACCENT_HEX = "#936bde";
 
 export default function Icon() {
   return new ImageResponse(
