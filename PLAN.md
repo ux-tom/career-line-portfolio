@@ -112,7 +112,10 @@ Design standalone export.
 
   Everything the brief calls placeholder that's still fake, owned by the user (not a code
   task — the site works correctly with these values, they just aren't real yet):
-  - `data/site.ts`: `city` (currently "City, Country").
+  - `data/site.ts` → `city`/`targetCity` — resolved: `city: "Wijchen"`, `targetCity:
+    "Utrecht"`. `About.tsx`'s meta label now reads "BASED: Wijchen · OPEN TO: Utrecht" so
+    recruiters filtering by Utrecht (the user's actual job-hunt target, a ~1hr commute from
+    Wijchen) don't silently skip the page.
   - `introCallUrl` — resolved: removed. The user is job-hunting (an employer), not
     client-hunting, so a "Book an intro call" self-service scheduling link didn't fit;
     the button and the `introCallUrl` field were deleted from `Contact.tsx`/`data/site.ts`.

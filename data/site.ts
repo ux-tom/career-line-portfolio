@@ -2,7 +2,7 @@
  * Site-wide content and config.
  *
  * Identity (name/email/socials) is real. Fields marked PLACEHOLDER are personal
- * facts (city, CV file, testimonial quotes) still owned by the user (Phase 7).
+ * facts (CV file, testimonial quotes) still owned by the user (Phase 7).
  * All narrative copy mirrors the Claude Design reference verbatim.
  */
 
@@ -15,7 +15,8 @@ export const site = {
   // --- Identity ---------------------------------------------------------
   name: "Tom Ottjes",
   role: "AI UX Designer",
-  city: "City, Country", // PLACEHOLDER
+  city: "Wijchen",
+  targetCity: "Utrecht", // shown as "OPEN TO: <targetCity>" — signals commute range to recruiters filtering by city
   email: "tomottjes@gmail.com",
   socials: [{ label: "LinkedIn", url: "https://www.linkedin.com/in/tom-ottjes/" }],
   cvUrl: "/cv.pdf", // PLACEHOLDER — file doesn't exist yet, add it to public/
