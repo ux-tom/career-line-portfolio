@@ -2,6 +2,7 @@
 
 import type { CaseStudy } from "@/data/caseStudies";
 import { site } from "@/data/site";
+import { Card, Chip, Label } from "@/components/ui";
 
 type Props = {
   study: CaseStudy;
@@ -25,9 +26,9 @@ export default function CaseStudyStop({ study, expanded, onToggle, layout }: Pro
         <ol className="flex flex-col gap-2">
           {study.steps.map((step, i) => (
             <li key={i} className="flex items-baseline gap-2.5">
-              <span className="shrink-0 font-mono text-[10px] text-accent">
+              <Label size="2xs" tone="accent" className="shrink-0">
                 0{i + 1}
-              </span>
+              </Label>
               <span className="text-[12px] leading-relaxed text-paper/60">
                 {step}
               </span>
@@ -36,12 +37,9 @@ export default function CaseStudyStop({ study, expanded, onToggle, layout }: Pro
         </ol>
         <div className="flex flex-wrap gap-2">
           {study.kpis.map((kpi) => (
-            <span
-              key={kpi}
-              className="whitespace-nowrap rounded border border-paper/30 px-[9px] py-1 font-mono text-[11px] uppercase tracking-wide text-paper"
-            >
+            <Chip key={kpi} variant="outline">
               {kpi}
-            </span>
+            </Chip>
           ))}
         </div>
       </div>
@@ -52,51 +50,59 @@ export default function CaseStudyStop({ study, expanded, onToggle, layout }: Pro
           className="flex h-[130px] items-center justify-center rounded-md border border-dashed border-paper/30"
           style={{ backgroundImage: shotHatch }}
         >
-          <span className="font-mono text-[10px] uppercase tracking-wide text-paper/50">
-            Project shot
-          </span>
+          <Label size="2xs">Project shot</Label>
         </div>
-        <div className="font-mono text-[10.5px] leading-relaxed text-paper/50">
+        <Label as="div" size="xs" className="leading-relaxed">
           {study.meta.join(" · ")}
-        </div>
+        </Label>
       </div>
     </div>
+  );
+
+  const toggleButton = (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-expanded={expanded}
+      aria-controls={panelId}
+      className="flex w-full flex-col gap-2 px-5 py-[18px] text-left"
+    >
+      <span className="flex items-baseline justify-between gap-4">
+        <span className={layout === "line" ? "whitespace-nowrap text-[17px] font-bold" : "text-[17px] font-bold"}>
+          {study.title}
+        </span>
+        {/* One-off mono text (13px, no uppercase/tracking) — doesn't fit the
+            Label primitive's uppercase-tracking-wide base, kept inline. */}
+        <span className="font-mono text-[13px] text-paper/50">
+          {expanded ? "× CLOSE" : "+ OPEN"}
+        </span>
+      </span>
+      <span
+        className={
+          layout === "line"
+            ? "max-w-[280px] text-[12.5px] leading-snug text-paper/60"
+            : "text-[12.5px] leading-snug text-paper/60"
+        }
+      >
+        {study.teaser}
+      </span>
+      <Chip variant="solid" className="self-start">
+        {study.kpiTeaser}
+      </Chip>
+    </button>
   );
 
   // --- Vertical stack (mobile / reduced motion) -------------------------
   if (layout === "stack") {
     return (
       <article className="py-6">
-        <div className="mb-2.5 font-mono text-[11px] uppercase tracking-wide text-paper/50">
+        <Label className="mb-2.5">
           {study.year} · {study.role}
-        </div>
-        <div
-          className={`overflow-hidden rounded-[10px] ${
-            expanded ? "border-[1.5px] border-paper bg-surface" : "border border-paper/20 bg-ink"
-          }`}
-        >
-          <button
-            type="button"
-            onClick={onToggle}
-            aria-expanded={expanded}
-            aria-controls={panelId}
-            className="flex w-full flex-col gap-2 px-5 py-[18px] text-left"
-          >
-            <span className="flex items-baseline justify-between gap-4">
-              <span className="text-[17px] font-bold">{study.title}</span>
-              <span className="font-mono text-[13px] text-paper/50">
-                {expanded ? "× CLOSE" : "+ OPEN"}
-              </span>
-            </span>
-            <span className="text-[12.5px] leading-snug text-paper/60">
-              {study.teaser}
-            </span>
-            <span className="self-start whitespace-nowrap rounded bg-paper px-[9px] py-[3px] font-mono text-[11px] text-ink">
-              {study.kpiTeaser}
-            </span>
-          </button>
+        </Label>
+        <Card padding="none" state={expanded ? "active" : "default"}>
+          {toggleButton}
           {expanded && detail}
-        </div>
+        </Card>
       </article>
     );
   }
@@ -104,45 +110,20 @@ export default function CaseStudyStop({ study, expanded, onToggle, layout }: Pro
   // --- Horizontal Career Line stop --------------------------------------
   return (
     <div className="relative flex flex-none flex-col items-stretch pb-24">
-      <div
-        className={`mb-2.5 font-mono text-[11px] uppercase tracking-wide ${
-          expanded ? "text-accent" : "text-paper/50"
-        }`}
-      >
+      <Label tone={expanded ? "accent" : "muted"} className="mb-2.5">
         {study.year} · {study.role}
-      </div>
+      </Label>
 
       <div
-        className={`relative z-[1] overflow-hidden rounded-[10px] transition-[width] duration-500 ease-out ${
-          expanded ? "border-[1.5px] border-paper bg-surface" : "border border-paper/20 bg-ink"
-        }`}
+        className="relative z-[1] transition-[width] duration-500 ease-out"
         style={{
           width: expanded ? site.journey.expandedWidthPx : site.journey.stopWidthPx,
         }}
       >
-        <button
-          type="button"
-          onClick={onToggle}
-          aria-expanded={expanded}
-          aria-controls={panelId}
-          className="flex w-full flex-col gap-2 px-5 py-[18px] text-left"
-        >
-          <span className="flex items-baseline justify-between gap-4">
-            <span className="whitespace-nowrap text-[17px] font-bold">
-              {study.title}
-            </span>
-            <span className="font-mono text-[13px] text-paper/50">
-              {expanded ? "× CLOSE" : "+ OPEN"}
-            </span>
-          </span>
-          <span className="max-w-[280px] text-[12.5px] leading-snug text-paper/60">
-            {study.teaser}
-          </span>
-          <span className="self-start whitespace-nowrap rounded bg-paper px-[9px] py-[3px] font-mono text-[11px] text-ink">
-            {study.kpiTeaser}
-          </span>
-        </button>
-        {expanded && detail}
+        <Card padding="none" state={expanded ? "active" : "default"}>
+          {toggleButton}
+          {expanded && detail}
+        </Card>
       </div>
 
       {/* Marker dot sitting on the dashed line */}

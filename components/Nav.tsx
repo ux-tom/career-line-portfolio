@@ -1,5 +1,6 @@
-import Image from "next/image";
+import clsx from "clsx";
 import { site } from "@/data/site";
+import { Avatar, Button, Label } from "@/components/ui";
 
 const links = [
   { label: "Work", href: "#work" },
@@ -9,21 +10,26 @@ const links = [
   { label: "Contact", href: "#contact" },
 ];
 
-export default function Nav() {
+/**
+ * `preview`: renders `sticky` instead of `fixed` so the /design-system
+ * catalog page can contain Nav inside a bordered frame instead of it
+ * hijacking the whole page's chrome. The real site (app/page.tsx) never
+ * passes this — behavior there is unchanged.
+ */
+export default function Nav({ preview = false }: { preview?: boolean }) {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-paper/15 bg-ink/85 px-6 py-3.5 backdrop-blur-md sm:px-10">
+    <header
+      className={clsx(
+        "inset-x-0 top-0 z-50 flex items-center justify-between border-b border-paper/15 bg-ink/85 px-6 py-3.5 backdrop-blur-md sm:px-10",
+        preview ? "sticky" : "fixed"
+      )}
+    >
       <a href="#top" className="flex items-center gap-3 no-underline">
-        <Image
-          src="/halftone-avatar.png"
-          alt=""
-          width={30}
-          height={30}
-          className="h-[30px] w-[30px] rounded-full bg-white object-cover"
-        />
+        <Avatar size={30} />
         <span className="text-[15px] font-bold">{site.name}</span>
-        <span className="hidden font-mono text-[10.5px] uppercase tracking-wide text-paper/50 sm:inline">
+        <Label size="xs" tone="muted" className="hidden sm:inline">
           {site.role}
-        </span>
+        </Label>
       </a>
 
       <nav className="flex items-center gap-[22px] font-mono text-[11px] uppercase tracking-wide">
@@ -36,13 +42,9 @@ export default function Nav() {
             {link.label}
           </a>
         ))}
-        <a
-          href={site.cvUrl}
-          download
-          className="rounded-full border border-paper px-3 py-1.5 text-paper transition-colors hover:bg-paper hover:text-ink"
-        >
+        <Button href={site.cvUrl} download variant="outline" tone="onInk" size="sm">
           CV ↓
-        </a>
+        </Button>
       </nav>
     </header>
   );

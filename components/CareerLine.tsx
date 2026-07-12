@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { caseStudies } from "@/data/caseStudies";
 import { useIsMobile } from "@/lib/useIsMobile";
 import { useReducedMotion } from "@/lib/useReducedMotion";
+import { Label, SectionHeader } from "@/components/ui";
 import CaseStudyStop from "./CaseStudyStop";
 
 /**
@@ -91,14 +92,12 @@ export default function CareerLine() {
   }, [useLine, scrollDistance]);
 
   const header = (
-    <div className="flex items-baseline justify-between gap-4 px-6 sm:px-10">
-      <h2 className="text-[28px] font-bold tracking-tight sm:text-[34px]">
-        The career line
-      </h2>
-      <span className="hidden font-mono text-[11px] uppercase tracking-wide text-paper/50 sm:block">
-        Click a stop to open it · New work appends →
-      </span>
-    </div>
+    <SectionHeader
+      title="The career line"
+      label="Click a stop to open it · New work appends →"
+      size="compact"
+      className="px-6 sm:px-10"
+    />
   );
 
   // --- Vertical stack (mobile / reduced motion) -------------------------
@@ -161,9 +160,9 @@ export default function CareerLine() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between gap-4 px-6 pb-6 pt-3.5 font-mono text-[11px] uppercase tracking-wide text-paper/50 sm:px-10">
-          <span>Keep scrolling to travel the line</span>
-          <span>4 stops · 2022 — 2026</span>
+        <div className="flex items-center justify-between gap-4 px-6 pb-6 pt-3.5 sm:px-10">
+          <Label>Keep scrolling to travel the line</Label>
+          <Label>4 stops · 2022 — 2026</Label>
         </div>
       </div>
     </section>
@@ -174,11 +173,11 @@ export default function CareerLine() {
 function NextStopNode() {
   return (
     <div className="flex flex-none flex-col items-center gap-3 pb-[130px]" style={{ width: 150 }}>
-      <div className="text-center font-mono text-[11px] uppercase leading-relaxed tracking-wide text-paper/50">
+      <Label as="div" className="text-center leading-relaxed">
         Next stop:
         <br />
         Your project
-      </div>
+      </Label>
       <a
         href="#contact"
         aria-label="Next stop: your project — go to contact"
@@ -194,9 +193,7 @@ function NextStopNode() {
 function NextStopLink() {
   return (
     <a href="#contact" className="flex flex-col items-start gap-2 border-t border-accent/40 py-6">
-      <span className="font-mono text-[11px] uppercase tracking-wide text-paper/50">
-        Next stop
-      </span>
+      <Label>Next stop</Label>
       <span className="text-lg font-bold text-accent">Your project →</span>
     </a>
   );

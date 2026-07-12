@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { site } from "@/data/site";
+import { Avatar, Button, Label } from "@/components/ui";
 
 /**
  * A deliberate light section — the one place the page inverts to warm
@@ -13,15 +13,8 @@ export default function About() {
       className="grid scroll-mt-20 grid-cols-1 items-start gap-12 border-t border-paper/15 bg-paper px-6 py-24 text-ink sm:px-10 md:grid-cols-[340px_1fr] md:gap-16"
     >
       <div className="flex flex-col gap-[18px]">
-        <Image
-          src="/halftone-avatar.png"
-          alt="Portrait"
-          width={200}
-          height={200}
-          priority
-          className="h-[200px] w-[200px] rounded-full border-2 border-ink bg-white object-cover"
-        />
-        <div className="font-mono text-[11px] uppercase leading-[1.8] tracking-wide text-ink/70">
+        <Avatar size={200} ring priority alt="Portrait" />
+        <Label as="div" surface="paper" size="sm" className="leading-[1.8]">
           BASED: {site.city}
           <br />
           {site.about.meta.map((line, i) => (
@@ -30,7 +23,7 @@ export default function About() {
               {i < site.about.meta.length - 1 && <br />}
             </span>
           ))}
-        </div>
+        </Label>
       </div>
 
       <div className="flex max-w-[640px] flex-col gap-[22px]">
@@ -46,13 +39,9 @@ export default function About() {
             {paragraph}
           </p>
         ))}
-        <a
-          href={site.cvUrl}
-          download
-          className="inline-flex w-fit items-center gap-2 rounded-full bg-ink px-[18px] py-2.5 font-mono text-[12px] uppercase tracking-wide text-paper transition-opacity hover:opacity-90"
-        >
+        <Button href={site.cvUrl} download variant="solid" tone="onPaper" className="w-fit">
           Download CV ↓
-        </a>
+        </Button>
       </div>
     </section>
   );

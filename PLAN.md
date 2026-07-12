@@ -168,3 +168,50 @@ Design standalone export.
   stacked fallback at 500px, and a clean `lint`/`tsc --noEmit`/`build`. Re-ran Lighthouse
   after the surface-token fix: Accessibility/Best Practices/SEO all 100/100, 47/47 audits
   passed.
+
+- [x] Phase 9: Design system extraction
+
+  The 9 section components each hardcode their own Tailwind classNames, so the same
+  visual ideas (pill buttons, KPI chips, the status-dot eyebrow, bordered cards, section
+  eyebrow/heading rows, the mono muted-label pattern) are re-implemented slightly
+  differently in multiple places — including one real drift bug (CareerLine's section
+  heading is `sm:text-[34px]` vs Skills/Testimonials' `sm:text-[40px]`, clearly a
+  copy-paste accident, not intent). This phase extracts the duplicated pieces into
+  shared primitives in `components/ui/` (`Button`, `Chip`, `StatusPill`, `Card`,
+  `SectionHeader`, `Label`, `Avatar` — built with the newly-added `tailwind-variants` +
+  `clsx`), refactors every section component to consume them instead of inline
+  duplicates, and adds an unlisted `/design-system` catalog page (`robots: noindex`, not
+  linked from Nav/Footer) that documents Foundations (live-read color tokens, type
+  scale, spacing/radius conventions, motion demo), the full `ui/` primitive variant
+  matrix, and the real section components mounted directly. Because the catalog page
+  imports the same component modules as the live site, editing a shared primitive
+  changes both at once — no separate syncing step. Done = `/` is pixel-equivalent to
+  its pre-refactor visuals (verified via chrome-devtools screenshot comparison),
+  `/design-system` renders every primitive/variant and every section component
+  correctly (including CareerLine's scroll mechanic working when mounted there), and
+  lint/tsc/build/Lighthouse all stay clean.
+  Code review: Passed. Along the way, fixed the CareerLine heading-size drift
+  intentionally by naming it `SectionHeader`'s `size="compact"` variant instead of
+  leaving it an accident, and unified the two inconsistent KPI-chip treatments (the
+  solid teaser chip was missing `tracking-wide`) onto one `Chip` primitive. Also
+  unified About's CV button padding (previously `px-[18px] py-2.5`, a one-off) onto
+  `Button`'s canonical `md` size (`px-[22px] py-3`) shared with Contact's buttons — a
+  ~4px cosmetic delta, deliberate. `Label`/`Card` needed generic `<T extends
+  ElementType>` typing (not a fixed `as?: ElementType` union) so TypeScript would accept
+  element-specific props like `href`/`target` when rendered `as="a"` — caught by `tsc`
+  during the refactor. Two dependency issues surfaced and were fixed: `tailwind-variants`
+  needed `tailwind-merge` as an explicit peer install (build failed with "module not
+  found" until added), and the first `ColorSwatches` draft used `useEffect` +
+  `setState`, which trips the project's `react-hooks/set-state-in-effect` lint rule —
+  rewrote it with `useSyncExternalStore`, matching the existing convention in
+  `lib/useReducedMotion.ts`/`lib/useIsMobile.ts`. Verified via chrome-devtools MCP: `/`
+  screenshotted section-by-section at 1440×900 (hero, career line collapsed+expanded,
+  about, skills, testimonials, contact, footer) is pixel-identical to the pre-refactor
+  site; `/design-system` renders all Foundations (live-read token swatches, confirmed
+  reading real computed values not a hardcoded copy), the full Button/Chip/Card/
+  SectionHeader/Label/Avatar variant matrices, and every section component mounted
+  live — including clicking a Career Line stop to expand/collapse it, which worked
+  correctly on this second route too. Confirmed `<meta name="robots" content="noindex,
+  nofollow">` is present and the page isn't linked from Nav or Footer. Zero console
+  errors on either route, zero horizontal overflow at 500px on either route, and a
+  clean `lint`/`tsc --noEmit`/`build`.
