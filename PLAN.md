@@ -215,3 +215,28 @@ Design standalone export.
   nofollow">` is present and the page isn't linked from Nav or Footer. Zero console
   errors on either route, zero horizontal overflow at 500px on either route, and a
   clean `lint`/`tsc --noEmit`/`build`.
+
+- [x] Phase 10: Temporary noindex safeguard
+
+  The live site (`data/caseStudies.ts`, `testimonials` in `data/site.ts`) still carries
+  fictional placeholder content per Phase 7 — invented KPIs, "Placeholder Co.", "Placeholder
+  Name" quotes — and the user flagged that recruiters could land on it as-is. Investigated
+  gating the production URL behind Vercel Deployment Protection first: Password Protection
+  requires the paid "Advanced Deployment Protection" add-on, and even free Vercel
+  Authentication (SSO protection) explicitly refuses to cover the production domain/alias
+  on the Hobby plan ("Vercel Authentication is not available on your plan for production
+  deployments" — confirmed via direct API call) — it only gates preview URLs and per-deploy
+  unique URLs, not `career-line-portfolio.vercel.app` itself. So there is no free way to
+  hide the production URL from a direct visitor. Given that, this phase adds `robots:
+  noindex` site-wide (root `layout.tsx` metadata, matching the pattern already used on
+  `/design-system`) plus an `app/robots.ts` disallowing all crawlers, so the site at least
+  drops out of search-engine discovery while Phase 7's real content is still pending. This
+  is a stopgap, not a fix: anyone with the direct URL can still see placeholder content —
+  Phase 7 (real case studies/testimonials/CV/etc.) is the actual resolution and should be
+  prioritized. Remove the noindex once Phase 7 ships.
+  Code review: Passed. Verified against a local production build (`npm run start`): the
+  root `<meta name="robots" content="noindex, nofollow">` tag renders on `/`, and
+  `/robots.txt` serves `Disallow: /` for all user agents. Confirmed the SSO/Vercel-
+  Authentication toggle enabled earlier in this session was disabled again afterward, so no
+  dangling protection setting was left on the Vercel project. `lint`/`tsc --noEmit`/`build`
+  all clean.

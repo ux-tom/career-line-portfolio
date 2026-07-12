@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   title: "The Career Line — AI UX Designer",
   description:
     "One line, measured at every stop. A career told as a journey map — case studies, KPIs, and process from an AI UX designer.",
+  // Temporary: case studies/testimonials are still Phase-7 placeholders. Remove once
+  // real content ships (PLAN.md Phase 10).
+  robots: { index: false, follow: false },
   openGraph: {
     title: "The Career Line — AI UX Designer",
     description:
