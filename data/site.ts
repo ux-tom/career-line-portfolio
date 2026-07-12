@@ -2,8 +2,8 @@
  * Site-wide content and config.
  *
  * Identity (name/email/socials) is real. Fields marked PLACEHOLDER are personal
- * facts (city, CV file, intro-call link, testimonial quotes) still owned by the
- * user (Phase 7). All narrative copy mirrors the Claude Design reference verbatim.
+ * facts (city, CV file, testimonial quotes) still owned by the user (Phase 7).
+ * All narrative copy mirrors the Claude Design reference verbatim.
  */
 
 export type Testimonial = {
@@ -19,7 +19,6 @@ export const site = {
   email: "tomottjes@gmail.com",
   socials: [{ label: "LinkedIn", url: "https://www.linkedin.com/in/tom-ottjes/" }],
   cvUrl: "/cv.pdf", // PLACEHOLDER — file doesn't exist yet, add it to public/
-  introCallUrl: "https://cal.com/yourname/intro", // PLACEHOLDER
 
   // --- Hero -----------------------------------------------------------------
   hero: {

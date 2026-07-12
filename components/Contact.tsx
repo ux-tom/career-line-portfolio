@@ -21,15 +21,6 @@ export default function Contact() {
         <Button href={`mailto:${site.email}`} variant="solid" tone="onInk">
           {site.email} →
         </Button>
-        <Button
-          href={site.introCallUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="outline"
-          tone="onInk"
-        >
-          Book an intro call
-        </Button>
         <Button href={site.cvUrl} download variant="ghost" tone="onInk">
           CV ↓
         </Button>

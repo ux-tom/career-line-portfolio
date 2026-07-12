@@ -112,9 +112,11 @@ Design standalone export.
 
   Everything the brief calls placeholder that's still fake, owned by the user (not a code
   task — the site works correctly with these values, they just aren't real yet):
-  - `data/site.ts`: `city` (currently "City, Country"), `introCallUrl` (currently a fake
-    cal.com link — either supply a real booking link or remove the "Book an intro call"
-    button in `components/Contact.tsx` if it's not wanted).
+  - `data/site.ts`: `city` (currently "City, Country").
+  - `introCallUrl` — resolved: removed. The user is job-hunting (an employer), not
+    client-hunting, so a "Book an intro call" self-service scheduling link didn't fit;
+    the button and the `introCallUrl` field were deleted from `Contact.tsx`/`data/site.ts`.
+    Contact is now just email + CV download.
   - `public/cv.pdf`: add the real file — `cvUrl: "/cv.pdf"` already points here, the
     Download CV buttons in `About.tsx`/`Contact.tsx` will pick it up automatically.
   - `data/site.ts` → `testimonials`: swap the 3 "Placeholder Name / Placeholder Co." quotes
