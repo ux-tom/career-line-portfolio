@@ -15,8 +15,7 @@ export const site = {
   // --- Identity ---------------------------------------------------------
   name: "Tom Ottjes",
   role: "AI UX Designer",
-  city: "Wijchen",
-  targetCity: "Utrecht", // shown as "OPEN TO: <targetCity>" — signals commute range to recruiters filtering by city
+  city: "Netherlands",
   email: "tomottjes@gmail.com",
   socials: [{ label: "LinkedIn", url: "https://www.linkedin.com/in/tom-ottjes/" }],
   cvUrl: "/cv.pdf", // PLACEHOLDER — file doesn't exist yet, add it to public/

@@ -15,7 +15,7 @@ export default function About() {
       <div className="flex flex-col gap-[18px]">
         <Avatar size={200} ring priority alt="Portrait" />
         <Label as="div" surface="paper" size="sm" className="leading-[1.8]">
-          BASED: {site.city} · OPEN TO: {site.targetCity}
+          BASED: {site.city}
           <br />
           {site.about.meta.map((line, i) => (
             <span key={i}>

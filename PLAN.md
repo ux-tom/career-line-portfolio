@@ -112,10 +112,10 @@ Design standalone export.
 
   Everything the brief calls placeholder that's still fake, owned by the user (not a code
   task — the site works correctly with these values, they just aren't real yet):
-  - `data/site.ts` → `city`/`targetCity` — resolved: `city: "Wijchen"`, `targetCity:
-    "Utrecht"`. `About.tsx`'s meta label now reads "BASED: Wijchen · OPEN TO: Utrecht" so
-    recruiters filtering by Utrecht (the user's actual job-hunt target, a ~1hr commute from
-    Wijchen) don't silently skip the page.
+  - `data/site.ts` → `city` — resolved: `city: "Netherlands"`. A city+targetCity split
+    ("BASED: Wijchen · OPEN TO: Utrecht") was tried first but read as redundant once both
+    were set to the same country, so this settled on a single country-level field;
+    `About.tsx`'s meta label is back to plain "BASED: Netherlands".
   - `introCallUrl` — resolved: removed. The user is job-hunting (an employer), not
     client-hunting, so a "Book an intro call" self-service scheduling link didn't fit;
     the button and the `introCallUrl` field were deleted from `Contact.tsx`/`data/site.ts`.
