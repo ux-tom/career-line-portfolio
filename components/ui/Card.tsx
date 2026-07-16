@@ -8,10 +8,10 @@ import { tv, type VariantProps } from "tailwind-variants";
 /**
  * The bordered rounded panel shell — previously copy-pasted between
  * SkillsProcess's skill cards, Testimonials' quote cards, and hand-rolled
- * as a ternary in CaseStudyStop's collapsed/expanded stop container.
- * `state="active"` reproduces CaseStudyStop's "expanded" treatment; static
+ * as a ternary in TimelineStop's collapsed/expanded stop container.
+ * `state="active"` reproduces TimelineStop's "expanded" treatment; static
  * cards (Skills/Testimonials) just use the default state. `padding="none"`
- * lets CaseStudyStop control its own inner spacing (toggle button + detail
+ * lets TimelineStop control its own inner spacing (toggle button + detail
  * panel each need different padding) rather than one uniform card inset.
  */
 const card = tv({

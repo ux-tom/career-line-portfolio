@@ -8,6 +8,7 @@ import Nav from "@/components/Nav";
 import SkillsProcess from "@/components/SkillsProcess";
 import Testimonials from "@/components/Testimonials";
 import { Avatar, Button, Card, Chip, Label, SectionHeader, StatusPill } from "@/components/ui";
+import { getTimelineItems } from "@/lib/timeline";
 import ColorSwatches from "./ColorSwatches";
 import { ComponentBlock, PrimitiveBlock } from "./DocBlock";
 
@@ -22,6 +23,8 @@ const BUTTON_VARIANTS = ["solid", "outline", "ghost"] as const;
 const BUTTON_SIZES = ["sm", "md"] as const;
 
 export default function DesignSystemPage() {
+  const timelineItems = getTimelineItems();
+
   return (
     <div className="flex flex-col gap-24 pb-24 pt-16">
       <header className="flex flex-col gap-3 px-6 sm:px-10">
@@ -206,11 +209,11 @@ export default function DesignSystemPage() {
         </ComponentBlock>
 
         <ComponentBlock
-          title="CareerLine + CaseStudyStop"
-          file="components/CareerLine.tsx, components/CaseStudyStop.tsx"
+          title="CareerLine + TimelineStop"
+          file="components/CareerLine.tsx, components/TimelineStop.tsx"
           note="Mounted at full size, unframed — its scroll-driven transform is relative to real document scroll and viewport, so containing it in a preview box would misrepresent how it actually behaves. Scroll through it like the live page."
         >
-          <CareerLine />
+          <CareerLine items={timelineItems} />
         </ComponentBlock>
 
         <ComponentBlock title="About" file="components/About.tsx">

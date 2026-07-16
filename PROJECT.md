@@ -16,11 +16,14 @@ experience the craft — systematic, holistic, KPI-driven design — by navigati
 Single-page Next.js (App Router) app, statically rendered where possible. One `page.tsx`
 composes ordered sections (Hero → Career Line → About → Skills & Process → Testimonials →
 Contact). The Career Line is the centerpiece: a sticky section whose scroll progress is
-mapped to `translateX`, moving case-study "stops" horizontally. All case-study and site
-content is centralized in typed data files (`data/caseStudies.ts`, `data/site.ts`) so the
-component layer never hardcodes copy — adding a new project is appending one data entry,
-not touching layout code. Below a mobile breakpoint, the timeline falls back to a vertical
-stack (the horizontal-scroll mechanic is desktop-first).
+mapped to `translateX`, moving timeline "stops" horizontally. Stops come in three types —
+Projects, Awards, Education — each authored as a markdown file under `content/` (frontmatter
+for structured fields, prose in the body; see `content/README.md`), read at build time by
+`lib/timeline.ts` and passed into `<CareerLine>` as props from the server page components.
+Site copy (name, email, socials, CV, journey widths) lives in `data/site.ts`. Adding a new
+timeline item is dropping one markdown file — no layout code touched. Below a mobile
+breakpoint, the timeline falls back to a vertical stack (the horizontal-scroll mechanic is
+desktop-first).
 
 ## Tech Stack
 

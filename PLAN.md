@@ -245,3 +245,103 @@ Design standalone export.
   Authentication toggle enabled earlier in this session was disabled again afterward, so no
   dangling protection setting was left on the Vercel project. `lint`/`tsc --noEmit`/`build`
   all clean.
+
+- [x] Phase 11: Timeline content pipeline & multi-type stops
+
+  The dashed line only carried one item type (Projects, `data/caseStudies.ts`), with
+  `CareerLine`/`CaseStudyStop` hard-wired to the full project shape. This phase generalizes
+  the line to carry three types — Projects, Awards (e.g. a CloudFest hackathon win), and
+  Education (courses grouped by time period) — each authored as a markdown file under
+  `content/` and read at build time. Introduces a typed discriminated union + server-side
+  loader (`lib/timeline.ts`, using `gray-matter` + `marked`), since the stop components are
+  `"use client"` and can't read `fs` — content loads in the server mount points
+  (`app/page.tsx`, `app/design-system/page.tsx`) and passes down as props. `CaseStudyStop`
+  is renamed to `TimelineStop` and switches on `item.type`: Projects keep full expand,
+  Awards are compact with a minimal context+link expand, Education is a static grouped
+  course list. Subtle type coding via a mono eyebrow label (PROJECT/AWARD/EDUCATION); same
+  card/marker system otherwise. Migrates the 4 existing projects to `.md`, scaffolds one
+  award + one education placeholder, and adds `content/README.md` documenting each type's
+  schema + blank templates. Also derives the now-dynamic stop count/year-range (was
+  hardcoded), retires `data/caseStudies.ts`, and updates the affected `rules/code-quality.md`
+  content rule + `PROJECT.md` architecture note. Done = the line renders all three types in
+  chronological order (projects full, awards/education compact) with a working stacked mobile
+  fallback, adding an item is dropping a markdown file with no layout-code change, and
+  lint/build/Lighthouse stay clean.
+  Code review: Passed. Fixed a real bug caught during verification: `lib/timeline.ts`'s
+  `readDir()` built the content folder path as `` `${type}s` ``, which pluralizes `education`
+  to `educations` — a folder that doesn't exist — so the education stop silently vanished
+  (the missing-folder `catch` swallows it and returns `[]`, no build error). Replaced the
+  pluralization guess with an explicit `TYPE_FOLDERS` map. Also proved the build-time
+  validation works as designed: deliberately stripped a required field from the award file,
+  confirmed `next build` failed with a clear `[timeline] content/awards/….md: missing or
+  empty required string field "placement"` error naming the exact file and field, then
+  restored it. Verified via chrome-devtools MCP at 1440×900 on both `/` and `/design-system`:
+  all 6 stops (4 projects + 1 award + 1 education group) render in chronological order with
+  correct eyebrow type labels; the CloudFest award expands to its context paragraph + a
+  "VIEW THE PROJECT ↗" link chip; the education stop renders its course list statically
+  (non-expandable, links work); the featured project (`copilot`, via frontmatter `featured:
+  true`) still opens by default; the footer stat line now reads "6 STOPS · 2022 — 2026",
+  correctly derived instead of the old hardcoded "4 stops · 2022 — 2026". Confirmed the
+  stacked mobile fallback (500px) renders all three types with no horizontal overflow, and
+  Lighthouse Accessibility/Best Practices are still 100/100 (SEO's 66 is the pre-existing
+  Phase-10 noindex, unrelated). Console clean throughout. Also confirmed the evolvability
+  contract still holds: dropped a dummy 5th project markdown file, rebuilt, saw it appear as
+  a 7th stop with zero layout-code changes, then removed it. `lint`/`tsc --noEmit`/`build`
+  all clean.
+
+  **Follow-up (same day):** the user's real CloudFest facts didn't fit the placeholder
+  schema — they won two named awards (Tech Visionary, Breaking Boundaries), not a ranked
+  "1st place" + track — so `AwardItem`'s `placement`/`category` fields were replaced with a
+  single `awards: string[]` (one or more chips), which is more accurate for hackathons in
+  general. This also fixed a real layout bug caught in the process: the compact award card's
+  "+ OPEN"/"× CLOSE" indicator had no `whitespace-nowrap`/`shrink-0`, so at `compactWidthPx`
+  it could break mid-word onto a second line alongside a wrapping title; fixed by pinning the
+  indicator's width and letting the title wrap independently (`min-w-0`, `items-start`).
+  Populated real content: `content/awards/cloudfest-hackathon.md` now carries the real award
+  names (date and project link are still placeholder, flagged in-file); `content/education/`
+  now has two real groups from the user's NN/g UX Certification (Management specialty) —
+  `2024-12.md` (Customer Journey Management, Service Blueprinting) and `2025-12.md`
+  (DesignOps: Scaling UX Design, Design Tradeoffs and UX Decision-Making, UX Leader:
+  Essential Skills for Any UX Practitioner), with the certificate-completion note attached to
+  the later group's body per the user's choice. `content/README.md`'s award template updated
+  to match. Verified via chrome-devtools MCP at 1440×900: the award card's title now wraps
+  cleanly without breaking the toggle text, both education groups render with correct courses
+  and the certificate note, footer count reads "7 STOPS · 2022 — 2026". Confirmed no
+  horizontal overflow at 500px and Lighthouse Accessibility/Best Practices still 100/100.
+  `lint`/`tsc --noEmit`/`build` all clean.
+
+  **Follow-up 2 (same day):** the user felt the NN/g certification deserved a headline signal,
+  not a trailing sentence — added an optional `EducationItem.credential?: string[]` (short
+  segments, each its own chip, same treatment as a KPI teaser/award chip) and set it on
+  `2025-12.md`. First attempt used a single long chip string, which overflowed the compact
+  card's border (`Chip`'s `whitespace-nowrap` had nowhere to wrap); fixed by splitting it into
+  two short chips ("NN/G CERTIFIED", "UX MANAGEMENT") that wrap as a group, reusing the same
+  pattern already proven safe by the award chips. Adding the credential made education cards
+  visibly taller, so education stops were made expandable (`isExpandable` now always `true`
+  for education): collapsed shows title + credential chips + a computed "`N` courses" teaser
+  + a "+ OPEN" toggle; expanding reveals the full course list and the context note, moved into
+  a new `detail` branch in `TimelineStop.tsx`.
+
+  **Follow-up 3 (same day):** moved the terminal "+" ("Next stop: your project") marker onto
+  the line itself and made the line stop there, per the user's request that it "pull more
+  attention." Previously the dashed line was a `position: absolute; inset-x-0` overlay fixed
+  to the viewport (always full-width regardless of scroll or content), and the "+" button
+  floated above it matching the card-float convention. Reworked both: the dashed line now
+  lives inside `trackRef` (which gained `position: relative`) with an explicit pixel `width`
+  measured via `getBoundingClientRect` from the track's start to the "+" marker's horizontal
+  center — so it scrolls with the content and its length is real, not decorative — and the
+  marker itself grew from 56px to 88px (`NEXT_STOP_MARKER_PX`), absolutely positioned at the
+  same vertical plane as every stop's dot (`LINE_OFFSET_PX`, shared constant), with an opaque
+  `bg-ink` fill so the line visually terminates into it rather than showing through a
+  transparent ring. Caught a real overlap bug in the process: the bigger marker's top edge
+  (it intentionally pokes above its wrapper's padding region to center on the line) initially
+  extended into the "Next stop" label's flow area above it, since the wrapper's padding wasn't
+  sized to clear the marker's full footprint — fixed by computing the wrapper's
+  `paddingBottom` from the marker's actual geometry plus a label gap, instead of a fixed
+  `pb-32`. Verified via chrome-devtools MCP at 1440×900: at the end of the line the marker
+  sits centered on the line with the dashes terminating exactly at it and no label/marker
+  overlap; at a mid-scroll position the line still correctly spans the full visible viewport
+  (hasn't reached its real end yet), confirming the effect only reads as "the line stops here"
+  once the marker has actually scrolled into place. No horizontal overflow at 500px, Lighthouse
+  Accessibility/Best Practices still 100/100, console clean, `lint`/`tsc --noEmit`/`build` all
+  clean.

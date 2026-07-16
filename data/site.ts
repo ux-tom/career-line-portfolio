@@ -27,7 +27,7 @@ export const site = {
     positioning:
       "I'm an AI UX designer. I ship fast, fit the development scope, and prove every design with the KPI it moved. This page is the line — scroll to travel it.",
     scrollHint: "SCROLL ↓ = TRAVEL →",
-    journeyEstimate: "EST. JOURNEY: 4 STOPS + YOURS",
+    journeyEstimate: "EST. JOURNEY: THE FULL LINE + YOURS",
   },
 
   // --- About ------------------------------------------------------------
@@ -99,14 +99,19 @@ export const site = {
   },
 
   // --- Journey config --------------------------------------------------
-  // Consumed by components/CareerLine.tsx / CaseStudyStop.tsx to size each stop
+  // Consumed by components/CareerLine.tsx / TimelineStop.tsx to size each stop
   // on the horizontal line. Fixed px so the value actually controls layout at
-  // desktop widths — tweak these two numbers to change how long the journey
-  // feels and how roomy an expanded case study is. Matches the reference.
+  // desktop widths — tweak these numbers to change how long the journey feels
+  // and how roomy an expanded stop is (project widths matched the reference;
+  // compact widths are for the newer award/education stop types).
   journey: {
-    /** Width of a collapsed stop on the Career Line, in px. */
+    /** Width of a collapsed project stop on the Career Line, in px. */
     stopWidthPx: 300,
-    /** Width of a stop once expanded, in px. */
+    /** Width of a project stop once expanded, in px. */
     expandedWidthPx: 640,
+    /** Width of a compact stop (awards, education) collapsed, in px. */
+    compactWidthPx: 240,
+    /** Width of a compact stop once expanded (awards with context), in px. */
+    compactExpandedWidthPx: 380,
   },
 } as const;

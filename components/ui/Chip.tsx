@@ -2,7 +2,7 @@ import { type ReactNode } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
 /**
- * KPI / label chip. Unifies CaseStudyStop's two prior chip treatments (an
+ * KPI / label chip. Unifies TimelineStop's two prior chip treatments (an
  * outlined KPI chip and a solid kpiTeaser chip) — both now share the same
  * `uppercase tracking-wide` base, a small consistency fix over the original
  * (the solid variant previously lacked `tracking-wide`).
