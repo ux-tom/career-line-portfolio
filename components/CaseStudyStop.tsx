@@ -109,7 +109,7 @@ export default function CaseStudyStop({ study, expanded, onToggle, layout }: Pro
 
   // --- Horizontal Career Line stop --------------------------------------
   return (
-    <div className="relative flex flex-none flex-col items-stretch pb-24">
+    <div className="relative flex flex-none flex-col items-stretch pb-32">
       <Label tone={expanded ? "accent" : "muted"} className="mb-2.5">
         {study.year} · {study.role}
       </Label>
