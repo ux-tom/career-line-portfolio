@@ -8,8 +8,9 @@ The Career Line — AI UX Designer Portfolio
 
 A one-page portfolio for an AI UX Designer, built as a customer journey map: the career
 itself is a continuous horizontal timeline ("the line") that vertical scroll drives the
-visitor along. Case studies are stops that expand in place. Recruiters and hiring managers
-experience the craft — systematic, holistic, KPI-driven design — by navigating it.
+visitor along. Projects, awards, and education are stops that expand in place. Recruiters
+and hiring managers experience the craft — systematic, holistic, KPI-driven design — by
+navigating it.
 
 ## Architecture
 
@@ -37,16 +38,20 @@ desktop-first).
 
 ## Business Logic
 
-- **Evolvability constraint:** the site must absorb new case studies without layout changes.
-  A case study is one object in `data/caseStudies.ts`; the Career Line component maps over
-  the array and lays itself out for N stops.
-- **KPI teaser → detail pattern:** every stop always shows a compact KPI teaser chip on the
-  line (mono type, ~11px). Clicking a stop expands it inline to reveal the full KPI set,
-  a 3-step process summary, project-shot placeholder, and meta — detail is progressive, not
-  front-loaded.
-- **Append-to-the-right growth model:** case studies are ordered chronologically (2022→2025
-  placeholders now); the line always ends with "Next stop: your project" → Contact, so new
-  work extends the line rather than replacing anything.
+- **Evolvability constraint:** the site must absorb new timeline items (projects, awards, or
+  education) without layout changes. Each item is one markdown file under `content/<type>/`;
+  `lib/timeline.ts` reads and validates the folder at build time, and the Career Line
+  component maps over the resulting list and lays itself out for N stops of any mix of types.
+- **KPI teaser → detail pattern (projects):** every project stop always shows a compact KPI
+  teaser chip on the line (mono type, ~11px). Clicking it expands inline to reveal the full
+  KPI set, a 3-step process summary, project-shot placeholder, and meta — detail is
+  progressive, not front-loaded. Awards and education use lighter variants of the same idea
+  (chips as the headline signal — award names, or a certification badge — with a compact or
+  no expand), so a course list or a hackathon win doesn't read as heavy as a full case study.
+- **Append-to-the-right growth model:** timeline items are ordered chronologically by their
+  `date` frontmatter across all three types (2022→2025 placeholders and real content now);
+  the line always ends with a large "Next stop: your project" marker sitting on the line
+  itself → Contact, so new work extends the line rather than replacing anything.
 - **Three meanings of "AI" (must read clearly in About/Skills copy):** (1) vibe-codes working
   prototypes — real interactions, not mockups; (2) uses AI to compress design cycles — days
   instead of weeks; (3) builds AI systems that keep designing on-brand after handoff.

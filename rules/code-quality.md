@@ -12,8 +12,11 @@
   code changes.
 - **Client components are opt-in.** This is a mostly-static marketing page. Only mark a
   component `"use client"` when it genuinely needs interactivity (scroll listeners, click
-  state) — the Career Line and case-study expand/collapse need it; most others don't.
+  state) — the Career Line and its `TimelineStop` expand/collapse need it; most others
+  don't. `lib/timeline.ts` is server-only (uses `fs`) and must never be imported from a
+  client component — call it from a server page component and pass the result down as props.
 - After editing any component, verify every prop/type it consumes still matches its shape
-  in `data/`, and that no removed export is still imported elsewhere.
+  in `data/site.ts` or `lib/timeline.ts`'s `TimelineItem` union, and that no removed export
+  is still imported elsewhere.
 - Respect `prefers-reduced-motion` in any scroll- or transform-driven component (the Career
   Line especially).
